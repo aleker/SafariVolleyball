@@ -9,17 +9,15 @@ public class Game extends Application {
 
     Stage stage;
     SceneWrapper currentScene;
-    int FPS;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-//        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+    public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
 
-        Group root = new Group();
         primaryStage.setTitle("Safari Volleyball");
 
-        TestScene scene = new TestScene(root, 800, 600);
+        Group root = new Group();
+        TestScene scene = new TestScene(root, this, 800, 600);
         scene.setFill(Color.PAPAYAWHIP);
 
         launchScene(scene);
@@ -27,8 +25,8 @@ public class Game extends Application {
 
     public void launchScene(SceneWrapper scene) {
         this.currentScene = scene;
-        stage.setScene(scene);
-        stage.show();
+        this.stage.setScene(scene);
+        scene.run(this.stage, this.currentScene);
     }
 
     public static void main(String[] args) {
