@@ -1,10 +1,19 @@
 package sample;
 
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 
 public class TestScene2 extends SceneWrapper {
+
     public TestScene2(Group root, Game game, int windowWidth, int windowHeight) {
         super(root, game, windowWidth, windowHeight);
+    }
+
+    @Override
+    public void initialize() {
+        Button button = new Button("Close button");
+        button.setOnAction(e -> this.game.stage.close());
+        this.addEntity(button);
     }
 
     @Override
@@ -13,7 +22,7 @@ public class TestScene2 extends SceneWrapper {
     }
 
     @Override
-    public void draw() {
+    public void update() {
 
     }
 }

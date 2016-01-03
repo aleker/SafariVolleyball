@@ -3,6 +3,7 @@ package sample;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -12,6 +13,7 @@ public abstract class SceneWrapper extends Scene {
     Game game;
     int width;
     int height;
+    Group root;
     Background background;
 
     public SceneWrapper(Group root, Game game, int windowWidth, int windowHeight) {
@@ -19,9 +21,13 @@ public abstract class SceneWrapper extends Scene {
         this.game = game;
         this.width = windowWidth;
         this.height = windowHeight;
+        this.root = root;
+        initialize();
     }
 
-    public void run(Stage stage, SceneWrapper scene) {
+    public abstract void initialize();
+
+    public void run(Stage stage) {
         final long startTime = System.nanoTime();
 
         new AnimationTimer() {
@@ -29,23 +35,24 @@ public abstract class SceneWrapper extends Scene {
             public void handle(long currentTime) {
                 double time = (currentTime - startTime) / 1000000000.0;
 
-                if( time >= 4.0 ) stop();
-
                 System.out.println(time);
-                scene.handleEvents();
+                handleEvents();
+                update();
                 stage.show();
             }
         }.start();
     }
 
-    public void initialize() {}
-
     public abstract void handleEvents();
 
-    public abstract void draw();
+    public abstract void update();
 
     public void exit(SceneWrapper newScene) {
         this.game.launchScene(newScene);
+    }
+
+    public void addEntity(Control entity) {
+        root.getChildren().add(entity);
     }
 
 }
