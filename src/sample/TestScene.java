@@ -13,8 +13,8 @@ public class TestScene extends SceneWrapper {
 
     @Override
     public void initialize() {
-        Button button = new Button("Go to test scene 2");
-        button.setOnAction(e -> this.exit(new TestScene2(new Group(), this.game, 600, 400)));
+        Button button = new Button("Go to Menu");
+        button.setOnAction(e -> this.exit(new Menu(new Group(), this.game, 600, 400)));
         this.addEntity(button);
     }
 

@@ -17,7 +17,7 @@ public class Game extends Application {
         primaryStage.setTitle("Safari Volleyball");
 
         Group root = new Group();
-        TestScene scene = new TestScene(root, this, 800, 600);
+        Menu scene = new Menu(root, this, 800, 600);
         scene.setFill(Color.PAPAYAWHIP);
 
         launchScene(scene);
