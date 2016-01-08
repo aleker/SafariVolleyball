@@ -16,7 +16,7 @@ public class Menu extends SceneWrapper {
     public void initialize() {
         // button Menu
         Button b_newGame = new Button("New Game (go to Gameplay)");
-        b_newGame.setOnAction(e -> this.exit(new Gameplay(new Group(), this.game, 600, 400)));
+        b_newGame.setOnAction(e -> this.exit(new Gameplay(new Group(), this.game, 800, 600)));
         this.addEntity(b_newGame);
         // button Change Player
         Button b_changePlayer = new Button("Change Player");
