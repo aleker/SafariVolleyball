@@ -11,13 +11,13 @@ public class Ball extends DynamicEntity {
     private Point startPos;
     private double startVel; // velocity after bounce the ball
 
-    Ball(double posX, double posY, double rad, double Vel) { // px, py - coordinates of ball center, rad - radius, Vel - velocity after bounce
+    Ball(double posX, double posY, double rad, double vel) { // px, py - coordinates of ball center, rad - radius, vel - velocity after bounce
         center.pos_x = posX;
         center.pos_y = posY;
         radius = rad;
         startPos.pos_x = posX - rad;
         startPos.pos_y = posY - rad;
-        startVel = -Vel;
+        startVel = -vel;
         setStartPos();
     }
 
