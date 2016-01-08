@@ -14,7 +14,7 @@ public abstract class SceneWrapper extends Scene {
     int width;
     int height;
     Group root;
-    Background background;
+    BackgroundImage background;
 
     public SceneWrapper(Group root, Game game, int windowWidth, int windowHeight) {
         super(root, windowWidth, windowHeight);

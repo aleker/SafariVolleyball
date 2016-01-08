@@ -17,14 +17,20 @@ public class Menu extends SceneWrapper {
         // button Menu
         Button b_newGame = new Button("New Game (go to Gameplay)");
         b_newGame.setOnAction(e -> this.exit(new Gameplay(new Group(), this.game, 800, 600)));
+        b_newGame.setLayoutX(200);
+        b_newGame.setLayoutY(200);
         this.addEntity(b_newGame);
         // button Change Player
         Button b_changePlayer = new Button("Change Player");
         b_changePlayer.setOnAction(e -> this.changePlayer());
+        b_changePlayer.setLayoutX(200);
+        b_changePlayer.setLayoutY(300);
         this.addEntity(b_changePlayer);
         // button Exit
         Button b_close = new Button("Exit");
         b_close.setOnAction(e -> this.quit());
+        b_close.setLayoutX(200);
+        b_close.setLayoutY(400);
         this.addEntity(b_close);
     }
 
