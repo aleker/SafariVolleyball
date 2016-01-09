@@ -51,7 +51,7 @@ public abstract class SceneWrapper extends Scene {
             public void handle(long currentTime) {
                 double time = (currentTime - startTime) / 1000000000.0;
 
-                System.out.println(time);
+//                System.out.println(time);
                 handleEvents();
                 update();
                 stage.show();
