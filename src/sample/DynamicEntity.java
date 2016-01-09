@@ -5,14 +5,26 @@ package sample;
  */
 public class DynamicEntity extends StaticEntity{
 
-    DynamicEntity(){}
+    DynamicEntity(String imagepath) {
+        this.gameConstant = new GameConstant();
+        this.point = new Point(gameConstant.C_START_POS_X,gameConstant.C_START_POS_Y);
+        this.path = imagepath;
+        vel_x = gameConstant.C_VEL_X;
+        vel_y = gameConstant.C_VEL_Y;
+        this.net_top_center = getNetTopCenter();
+        loadImage();
+        setWidth();
+        setHeight();
+        setCenterPoint();
+    }
 
-    GameConstant gameConstant;
-    public double  vel_x = gameConstant.C_VEL_X ;
-    public double vel_y = gameConstant.C_VEL_Y;
+
+
+    public double  vel_x;
+    public double vel_y;
     public double radius = width/2;
     public boolean change_direction = false;
-    public Point net_top_center = getNetTopCenter();
+    public Point net_top_center = new Point(150,150);// public Point net_top_center = getNetTopCenter();
 
     public enum Intersect_enum{
         LEFT_WALL(false),
@@ -69,7 +81,7 @@ public class DynamicEntity extends StaticEntity{
         //end game or sth ;p
     }
     private void collisionWithNet(){
-        if (this.center_point.pos_y > list_of_staticEntity[4].point.pos_y + list_of_staticEntity[4].width/2){
+        if (this.center_point.pos_y > list_of_staticEntity.get(4).point.pos_y + list_of_staticEntity.get(4).width/2){
             this.vel_x = -vel_x;
         }
         else {
@@ -94,34 +106,34 @@ public class DynamicEntity extends StaticEntity{
     public void intersect(){
 
         Intersect_enum intersect_enum = Intersect_enum.LEFT_WALL;
-        if(this.point.pos_x<list_of_staticEntity[0].point.pos_x){ // collison with left wall
+        if(this.point.pos_x<list_of_staticEntity.get(0).point.pos_x){ // collison with left wall
             intersect_enum.setStatus(true);
         }
 
-        if( this.point.pos_x + this.width > list_of_staticEntity[1].point.pos_x){ // collision with right wall
+        if( this.point.pos_x + this.width > list_of_staticEntity.get(1).point.pos_x){ // collision with right wall
             intersect_enum = Intersect_enum.RIGHT_WALL;
             intersect_enum.setStatus(true);
         }
 
-        if(this.point.pos_y < list_of_staticEntity[2].point.pos_y){ // collision with ceiling
+        if(this.point.pos_y < list_of_staticEntity.get(2).point.pos_y){ // collision with ceiling
             intersect_enum = Intersect_enum.CEILING;
             intersect_enum.setStatus(true);
         }
 
-        if(this.point.pos_y + this.height>list_of_staticEntity[3].point.pos_y){ // collison with ground
+        if(this.point.pos_y + this.height>list_of_staticEntity.get(3).point.pos_y){ // collison with ground
             intersect_enum = Intersect_enum.GROUND;
             intersect_enum.setStatus(true);
         }
 
-        if (this.point.pos_y + this.height > list_of_staticEntity[4].point.pos_y +list_of_staticEntity[4].width/2 ){  // collision with net
-            if(this.point.pos_x + this.width > list_of_staticEntity[4].point.pos_x &&
-                    this.point.pos_x < list_of_staticEntity[4].point.pos_x +  list_of_staticEntity[4].width){
+        if (this.point.pos_y + this.height > list_of_staticEntity.get(4).point.pos_y +list_of_staticEntity.get(4).width/2 ){  // collision with net
+            if(this.point.pos_x + this.width > list_of_staticEntity.get(4).point.pos_x &&
+                    this.point.pos_x < list_of_staticEntity.get(4).point.pos_x +  list_of_staticEntity.get(4).width){
                 intersect_enum = Intersect_enum.NET;
                 intersect_enum.setStatus(true);
             }
         }
 
-        if (distanceBetweenTwoPoints(net_top_center,this.center_point)<= this.radius + list_of_staticEntity[4].width/2 ){
+        if (distanceBetweenTwoPoints(net_top_center,this.center_point)<= this.radius + list_of_staticEntity.get(4).width/2 ){
             intersect_enum = Intersect_enum.NET;
             intersect_enum.setStatus(true);
         }
