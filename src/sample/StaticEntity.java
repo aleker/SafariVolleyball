@@ -38,7 +38,7 @@ public class StaticEntity {
     Image image;
     public String path;
 
-    public List<StaticEntity> list_of_staticEntity = new ArrayList<StaticEntity>();
+    public static List<StaticEntity> list_of_staticEntity = new ArrayList<StaticEntity>();
 
 
     public void setCenterPoint(){
@@ -59,8 +59,9 @@ public class StaticEntity {
 
     public Point getNetTopCenter(){
         Point net_top_center = new Point(this.list_of_staticEntity.get(4).image.getWidth()/2 + this.list_of_staticEntity.get(4).point.pos_x,
-                this.list_of_staticEntity.get(4).image.getWidth()/2 + this.list_of_staticEntity.get(4).point.pos_y);
+                this.list_of_staticEntity.get(4).point.pos_y -  this.list_of_staticEntity.get(4).image.getWidth()/2);
         return net_top_center;
     }
 
 }
+
