@@ -2,7 +2,7 @@ package sample;
 
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Game extends Application {
@@ -18,7 +18,7 @@ public class Game extends Application {
 
         Group root = new Group();
         TestScene scene = new TestScene(root, this, 800, 600);
-        scene.setFill(Color.PAPAYAWHIP);
+        scene.addBackground(new Image("file:graphics.png"));
 
         launchScene(scene);
     }

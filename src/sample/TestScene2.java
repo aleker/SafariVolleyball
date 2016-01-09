@@ -1,16 +1,11 @@
 package sample;
 
-import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 
 public class TestScene2 extends SceneWrapper {
 
     public TestScene2(Pane root, Game game, int windowWidth, int windowHeight) {
-        super(root, game, windowWidth, windowHeight);
-    }
-
-    public TestScene2(Group root, Game game, int windowWidth, int windowHeight) {
         super(root, game, windowWidth, windowHeight);
     }
 

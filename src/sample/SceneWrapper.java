@@ -5,6 +5,8 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -17,7 +19,7 @@ public abstract class SceneWrapper extends Scene {
     Parent root = null;
     Pane pane = null;
     Group group = null;
-    Background background;
+    Image background;
 
     public SceneWrapper(Pane root, Game game, int windowWidth, int windowHeight) {
         super(root, windowWidth, windowHeight);
@@ -29,7 +31,7 @@ public abstract class SceneWrapper extends Scene {
         initialize();
     }
 
-    public SceneWrapper(Group root, Game game, int windowWidth, int windowHeight) {
+    public SceneWrapper(Group root, Game game, int windowWidth, int windowHeight/*, Background background*/) {
         super(root, windowWidth, windowHeight);
         this.game = game;
         this.width = windowWidth;
@@ -68,6 +70,13 @@ public abstract class SceneWrapper extends Scene {
     public void addEntity(Control entity) {
         if(group != null) group.getChildren().add(entity);
         else if(pane != null) pane.getChildren().add(entity);
+    }
+
+    public void addBackground(Image background) {
+        this.background = background;
+        ImageView imageView = new ImageView();
+        imageView.setImage(background);
+        this.group.getChildren().add(0,imageView);
     }
 
 }
