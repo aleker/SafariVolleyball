@@ -1,11 +1,16 @@
 package sample;
 
 import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import java.util.Random;
 
 public class TestScene extends SceneWrapper {
+
+    public TestScene(Pane root, Game game, int windowWidth, int windowHeight) {
+        super(root, game, windowWidth, windowHeight);
+    }
 
     public TestScene(Group root, Game game, int windowWidth, int windowHeight) {
         super(root, game, windowWidth, windowHeight);
@@ -14,7 +19,7 @@ public class TestScene extends SceneWrapper {
     @Override
     public void initialize() {
         Button button = new Button("Go to test scene 2");
-        button.setOnAction(e -> this.exit(new TestScene2(new Group(), this.game, 600, 400)));
+        button.setOnAction(e -> this.exit(new TestScene2(new Pane(), this.game, 600, 400)));
         this.addEntity(button);
     }
 

@@ -2,6 +2,7 @@ package sample;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.layout.*;
@@ -13,8 +14,20 @@ public abstract class SceneWrapper extends Scene {
     Game game;
     int width;
     int height;
-    Group root;
+    Parent root = null;
+    Pane pane = null;
+    Group group = null;
     Background background;
+
+    public SceneWrapper(Pane root, Game game, int windowWidth, int windowHeight) {
+        super(root, windowWidth, windowHeight);
+        this.game = game;
+        this.width = windowWidth;
+        this.height = windowHeight;
+        this.root = root;
+        this.pane = root;
+        initialize();
+    }
 
     public SceneWrapper(Group root, Game game, int windowWidth, int windowHeight) {
         super(root, windowWidth, windowHeight);
@@ -22,6 +35,7 @@ public abstract class SceneWrapper extends Scene {
         this.width = windowWidth;
         this.height = windowHeight;
         this.root = root;
+        this. group = root;
         initialize();
     }
 
@@ -52,7 +66,8 @@ public abstract class SceneWrapper extends Scene {
     }
 
     public void addEntity(Control entity) {
-        root.getChildren().add(entity);
+        if(group != null) group.getChildren().add(entity);
+        else if(pane != null) pane.getChildren().add(entity);
     }
 
 }
