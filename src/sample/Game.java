@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Game extends Application {
@@ -13,6 +15,10 @@ public class Game extends Application {
         stage = primaryStage;
 
         primaryStage.setTitle("Safari Volleyball");
+
+        Group root = new Group();
+        Menu scene = new Menu(root, this, 600, 400);
+        launchScene(scene);
     }
 
     public void launchScene(SceneWrapper scene) {
