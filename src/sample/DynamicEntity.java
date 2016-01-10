@@ -97,11 +97,15 @@ public class DynamicEntity extends StaticEntity {
         this.vel_y = - vel_y;
     }
     private void collisionWithGround(){
+
+        // loose score, end game or sth
+        //it's only TEST
         double new_vel_y = - vel_y;
         if(this.vel_y > 0 && new_vel_y <0) {
             this.change_direction = true;
         }
         vel_y = new_vel_y;
+        //END TEST
 
     }
     private void collisionWithNet() {
@@ -150,13 +154,13 @@ public class DynamicEntity extends StaticEntity {
             intersect_enum = Intersect_enum.GROUND;
             intersect_enum.setStatus(true);
         }
-        if (distanceBetweenTwoPoints(net_top_center,this.center_point)< this.radius + 5 + list_of_staticEntity.get(4).width/2  ){
+        if (distanceBetweenTwoPoints(net_top_center,this.center_point)< this.radius + 5 + list_of_staticEntity.get(4).width/2  ){// collision with net
             intersect_enum = Intersect_enum.NET;
             intersect_enum.setStatus(true);
             top_net_collision = true;
 
         }
-        if (this.center_point.pos_y>net_top_center.pos_y ){  // collision with net
+            if (this.center_point.pos_y>net_top_center.pos_y ){  // collision with net
             if(this.point.pos_x + this.width > list_of_staticEntity.get(4).point.pos_x &&
                     this.point.pos_x < list_of_staticEntity.get(4).point.pos_x +  list_of_staticEntity.get(4).width){
                 intersect_enum = Intersect_enum.NET;
