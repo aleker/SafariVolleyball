@@ -11,7 +11,7 @@ public class Gameplay extends SceneWrapper {
     // Player playerList[];
     int points[];
 
-    public Gameplay(Group root, Game game, int windowWidth, int windowHeight) {
+    public Gameplay(Pane root, Game game, int windowWidth, int windowHeight) {
         super(root, game, windowWidth, windowHeight);
     }
 
