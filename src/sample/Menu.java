@@ -29,14 +29,14 @@ public class Menu extends SceneWrapper {
         this.addBackground(new Image("file:src/Pictures/background.png"));
         Button b_newGame = new Button("New Game");
         b_newGame.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
-        b_newGame.setOnAction(e -> this.exit(new Gameplay(new Group(), this.game, 800, 600)));
+        b_newGame.setOnAction(e -> this.exit(new GamePlay(new Group(), this.game, 800, 600)));
         b_newGame.setLayoutX(300);
         b_newGame.setLayoutY(200);
 //        DropShadow shadow = new DropShadow();
 //        shadow.setColor(Color.ORANGERED);
 //        b_newGame.setEffect(shadow);
         // BUTTON's ICON:
-        //Button b_newGame = new Button("New Game (go to Gameplay)", new ImageView("file:src/Pictures/lion_white.png"));
+        //Button b_newGame = new Button("New Game (go to GamePlay)", new ImageView("file:src/Pictures/lion_white.png"));
         // BUTTON's IMAGE:
         //b_newGame.setBackground(new Background(new BackgroundImage(new Image("file:src/Pictures/net.png"),
         //        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
