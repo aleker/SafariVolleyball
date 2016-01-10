@@ -3,6 +3,9 @@ package sample;
 import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class TestScene extends SceneWrapper {
 
@@ -20,6 +23,15 @@ public class TestScene extends SceneWrapper {
     @Override
     public void handleEvents() {
         this.setOnMousePressed(mouseEvent -> System.out.println("Mouse click in TestScene"));
+        this.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if(keyEvent.getCode() == KeyCode.RIGHT)
+                    System.out.println("Right arrow");
+                else if(keyEvent.getCode() == KeyCode.LEFT)
+                    System.out.println("Left arrow");
+            }
+        });
     }
 
     @Override

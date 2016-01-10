@@ -29,9 +29,10 @@ public abstract class SceneWrapper extends Scene {
         this.root = root;
         this.pane = root;
         initialize();
+        handleEvents();
     }
 
-    public SceneWrapper(Group root, Game game, int windowWidth, int windowHeight/*, Background background*/) {
+    public SceneWrapper(Group root, Game game, int windowWidth, int windowHeight) {
         super(root, windowWidth, windowHeight);
         this.game = game;
         this.width = windowWidth;
@@ -39,9 +40,12 @@ public abstract class SceneWrapper extends Scene {
         this.root = root;
         this. group = root;
         initialize();
+        handleEvents();
     }
 
     public abstract void initialize();
+
+    public abstract void handleEvents();
 
     public void run(Stage stage) {
         final long startTime = System.nanoTime();
@@ -51,14 +55,11 @@ public abstract class SceneWrapper extends Scene {
             public void handle(long currentTime) {
                 double time = (currentTime - startTime) / 1000000000.0;
 
-                handleEvents();
                 update();
                 stage.show();
             }
         }.start();
     }
-
-    public abstract void handleEvents();
 
     public abstract void update();
 
