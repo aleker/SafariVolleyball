@@ -10,8 +10,7 @@ public class PlayerList {
     public static Player newPlayer(int index, int side) throws Exception {
         final Class<? extends Player> playerClass = (Class<? extends Player>) playerList[index];
         final Constructor<? extends Player> playerConstructor = playerClass.getConstructor(int.class);
-        final Player player = playerConstructor.newInstance(side);
-        return player;
+        return playerConstructor.newInstance(side);
     }
 }
 
