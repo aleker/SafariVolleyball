@@ -1,7 +1,7 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Game extends Application {
@@ -15,7 +15,7 @@ public class Game extends Application {
 
         primaryStage.setTitle("Safari Volleyball");
 
-        Group root = new Group();
+        Pane root = new Pane();
 
         launchScene(new MenuScene(root, this, 800, 600));
     }

@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -15,14 +14,15 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class MenuScene extends SceneWrapper {
-    public MenuScene(Group root, Game game, int windowWidth, int windowHeight) {
+    public MenuScene(Pane root, Game game, int windowWidth, int windowHeight) {
         super(root, game, windowWidth, windowHeight);
     }
 
     @Override
     public void initialize() {
         final GridPane grid = new GridPane();
-        this.group.getChildren().add(grid);
+        this.pane.getChildren().add(grid);
+        grid.setPrefSize(this.width, this.height);
         grid.setAlignment(Pos.CENTER);
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setHgap(5);
