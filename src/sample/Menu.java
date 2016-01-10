@@ -42,7 +42,7 @@ public class Menu extends SceneWrapper {
         b_changePlayer.setLayoutX(200);
         b_changePlayer.setLayoutY(300);
         this.addEntity(b_changePlayer);
-        
+
         // button Exit
         Button b_close = new Button("Exit");
         b_close.setOnAction(e -> this.quit());
