@@ -39,7 +39,7 @@ public class Animal extends DynamicEntity {
                 point.pos_x += deltaX;
                 if(point.pos_x > rightLimit) point.pos_x = rightLimit;
             case 8: // MOVE_UP
-                double floorLevel = list_of_staticEntity[3].point.pos_y;
+                double floorLevel = list_of_staticEntity.get(3).point.pos_y;
                 if(point.pos_y + height == floorLevel) jump();
         }
     }
