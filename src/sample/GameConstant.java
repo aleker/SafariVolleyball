@@ -10,4 +10,6 @@ public class GameConstant {
     double C_GRAVITY = 0.1;
     double C_START_POS_X = 0;
     double C_START_POS_Y = 0;
+
+    int MAX_POINTS = 15;
 }

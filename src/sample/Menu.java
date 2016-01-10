@@ -9,6 +9,8 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.application.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,38 +27,49 @@ public class Menu extends SceneWrapper {
 
     @Override
     public void initialize() {
-        // button Menu
         this.addBackground(new Image("file:src/Pictures/background.png"));
-        Button b_newGame = new Button("New Game");
-        b_newGame.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
+        // NEW GAME
+        Button b_newGame = new Button("Start");
         b_newGame.setOnAction(e -> this.exit(new GamePlay(new Group(), this.game, 800, 600)));
-        b_newGame.setLayoutX(300);
-        b_newGame.setLayoutY(200);
-//        DropShadow shadow = new DropShadow();
-//        shadow.setColor(Color.ORANGERED);
-//        b_newGame.setEffect(shadow);
-        // BUTTON's ICON:
-        //Button b_newGame = new Button("New Game (go to GamePlay)", new ImageView("file:src/Pictures/lion_white.png"));
-        // BUTTON's IMAGE:
-        //b_newGame.setBackground(new Background(new BackgroundImage(new Image("file:src/Pictures/net.png"),
-        //        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        // BUTTON's FONT
-        //b_newGame.setFont(Font.font ("Verdana", 20));
+        b_newGame.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
+        b_newGame.setLayoutX(400);
+        b_newGame.setLayoutY(300);
         this.addEntity(b_newGame);
 
-        // button Change Player
-        Button b_changePlayer = new Button("Change Player");
-        b_changePlayer.setOnAction(e -> this.changePlayer());
-        b_changePlayer.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
-        b_changePlayer.setLayoutX(300);
-        b_changePlayer.setLayoutY(250);
-        this.addEntity(b_changePlayer);
+        // CHANGE PLAYER
+        // labels
+        final Label leftPlayerLabel = new Label("Left Player:");
+        leftPlayerLabel.setStyle("-fx-font: 16 verdana; -fx-text-fill: snow");
+        leftPlayerLabel.setLayoutX(270);
+        leftPlayerLabel.setLayoutY(200);
+        this.addEntity(leftPlayerLabel);
+        final Label rightPlayerLabel = new Label("Right Player:");
+        rightPlayerLabel.setStyle("-fx-font: 16 verdana; -fx-text-fill: snow");
+        rightPlayerLabel.setLayoutX(270);
+        rightPlayerLabel.setLayoutY(250);
+        this.addEntity(rightPlayerLabel);
 
-        // button Exit
+        // ComboBoxes
+        final ComboBox<String> leftPlayerComboBox = new ComboBox<String>();
+        final ComboBox<String> rightPlayerComboBox = new ComboBox<String>();
+        for (Class<?> klass: PlayerList.playerList) {
+            leftPlayerComboBox.getItems().add(klass.getName());
+            rightPlayerComboBox.getItems().add(klass.getName());
+        }
+        leftPlayerComboBox.setValue(leftPlayerComboBox.getItems().get(0));
+        rightPlayerComboBox.setValue(rightPlayerComboBox.getItems().get(0));
+        leftPlayerComboBox.setLayoutX(400);
+        leftPlayerComboBox.setLayoutY(200);
+        rightPlayerComboBox.setLayoutX(400);
+        rightPlayerComboBox.setLayoutY(250);
+        this.addEntity(leftPlayerComboBox);
+        this.addEntity(rightPlayerComboBox);
+
+        // EXIT
         Button b_close = new Button("Exit");
         b_close.setOnAction(e -> this.quit());
         b_close.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
-        b_close.setLayoutX(300);
+        b_close.setLayoutX(270);
         b_close.setLayoutY(300);
         this.addEntity(b_close);
     }
@@ -75,3 +88,41 @@ public class Menu extends SceneWrapper {
     public void quit() { this.game.stage.close(); }
 
 }
+
+/*      super(new GridPane(), 640, 480);
+        final GridPane grid = (GridPane) getRoot();
+        grid.setAlignment(Pos.CENTER);
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setHgap(5);
+        grid.setVgap(5);
+
+        final Text title = new Text("Safari Volleyball");
+        title.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+        grid.add(title, 0, 0, 2, 1);
+
+        final Label leftPlayerLabel = new Label("Left Player:");
+        final Label rightPlayerLabel = new Label("Right Player:");
+        grid.add(leftPlayerLabel, 0, 1);
+        grid.add(rightPlayerLabel, 0, 2);
+
+        final ComboBox<String> leftPlayerComboBox = new ComboBox<String>();
+        final ComboBox<String> rightPlayerComboBox = new ComboBox<String>();
+        leftPlayerComboBox.getItems().addAll("Human (WSAD)");
+        leftPlayerComboBox.setValue(leftPlayerComboBox.getItems().get(0));
+        rightPlayerComboBox.getItems().addAll("Human (Arrows)", "AI1", "AI2");
+        rightPlayerComboBox.setValue(rightPlayerComboBox.getItems().get(0));
+        grid.add(leftPlayerComboBox, 1, 1);
+        grid.add(rightPlayerComboBox, 1, 2);
+
+        final Button playButton = new Button("Play!");
+        playButton.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent ae) {
+                System.out.println("Left Player: " + leftPlayerComboBox.getValue());
+                System.out.println("Right Player: " + rightPlayerComboBox.getValue());
+            }
+        });
+        grid.add(playButton, 0, 3, 2, 1);
+
+        final BackgroundImage backgroundImage = loadBackgroundImage("sample/background.png");
+        grid.setBackground(new Background(backgroundImage));
+        // no fills? */
