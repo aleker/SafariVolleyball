@@ -5,8 +5,6 @@ package sample;
  */
 public class DynamicEntity extends StaticEntity {
 
-    DynamicEntity(){}
-
     DynamicEntity(String imagepath) {
         this.gameConstant = new GameConstant();
         this.point = new Point(gameConstant.C_START_POS_X,gameConstant.C_START_POS_Y);
