@@ -13,6 +13,7 @@ public class Animal extends DynamicEntity {
     private double rightLimit;
 
     Animal(double px, double py, double dx, double rad, double vel, double limitLeft, double limitRight) {
+        super("animal1.jpg");
         center.pos_x = px;
         center.pos_y = py;
         deltaX = dx;
