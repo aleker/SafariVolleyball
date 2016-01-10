@@ -43,7 +43,7 @@ public abstract class SceneWrapper extends Scene {
 
     public abstract void initialize();
 
-    public void run(Stage stage) {
+    public void run(final Stage stage) {
         final long startTime = System.nanoTime();
 
         new AnimationTimer() {
