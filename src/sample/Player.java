@@ -64,20 +64,3 @@ public class Player {
         animal.move(direction);
     }
 }
-
-// remove before merging with master
-class Animal {
-    public Animal(double px, double py, double dx, double rad, double vel, double limitLeft, double limitRight) {}
-    public void move(int num) {}
-}
-
-class StaticEntity {
-    public static List<StaticEntity> list_of_staticEntity;
-    public Point point;
-    public double width;
-}
-
-class Point {
-    public double pos_x;
-    public double pos_y;
-}
