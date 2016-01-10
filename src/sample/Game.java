@@ -18,8 +18,6 @@ public class Game extends Application {
 
         Group root = new Group();
         Menu scene = new Menu(root, this, 800, 600);
-        scene.addBackground(new Image("file:src/Pictures/background.png"));
-
         launchScene(scene);
     }
 
