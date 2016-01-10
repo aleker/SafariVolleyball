@@ -2,7 +2,6 @@ package sample;
 
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Game extends Application {
