@@ -19,8 +19,6 @@ public class DynamicEntity extends StaticEntity {
         setCenterPoint();
     }
 
-
-
     public double  vel_x;
     public double vel_y;
     public double radius = width/2;
