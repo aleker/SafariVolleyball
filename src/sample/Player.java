@@ -1,5 +1,7 @@
 package sample;
 
+import java.util.List;
+
 /**
  * Created by aleksander-zn on 2016-01-09.
  */
@@ -9,17 +11,19 @@ public class Player {
 
     // British English spelling just to annoy programmers
     private int colour;
-    private int side;
 
-    // placeholders for real constants; they may be migrated to another class, don't get used to 'em
-    private static final double dx = 0;
-    private static final double rad = 0;
-    private static final double vel = 0;
+    // we can't change side during the game
+    private final int side;
 
     // on which side of the net out character is supposed to be?
-    // this constants are public to make life easier; they enable other classes to create a player this way:
+    // public to enable other classes to create a player this way:
     // Player p = new Player(Player.LEFT_SIDE);
-    public static final int LEFT_SIDE = -1;
+    // as these constants are numbered from zero, you can use them as array indices, for example:
+    // Player[] p = new Player[2];
+    // for (int i = Player.LEFT_SIDE; i <= Player.RIGHT_SIDE; i++) {
+    //     p[i] = new Player(i);
+    // }
+    public static final int LEFT_SIDE = 0;
     public static final int RIGHT_SIDE = 1;
 
     public Player(int side) {
@@ -27,34 +31,53 @@ public class Player {
     }
 
     public void createAnimal(int colour) {
-        StaticEntity leftWall = StaticEntity.list_of_staticEntity[0];
-        StaticEntity rightWall = StaticEntity.list_of_staticEntity[1];
-        StaticEntity net = StaticEntity.list_of_staticEntity[3];
-        StaticEntity ground = StaticEntity.list_of_staticEntity[4];
+        final StaticEntity leftWall = StaticEntity.list_of_staticEntity.get(0);
+        final StaticEntity rightWall = StaticEntity.list_of_staticEntity.get(1);
+        final StaticEntity net = StaticEntity.list_of_staticEntity.get(3);
+        final StaticEntity ground = StaticEntity.list_of_staticEntity.get(4);
 
         double leftLimit;
         double rightLimit;
-        switch (side) {
-            case LEFT_SIDE:
-                leftLimit = leftWall.point.pos_x + leftWall.width;
-                rightLimit = net.point.pos_x;
-                break;
-            case RIGHT_SIDE:
-                leftLimit = net.point.pos_x + net.width;
-                rightLimit = rightWall.point.pos_x;
-                break;
+        if (side == LEFT_SIDE) {
+            leftLimit = leftWall.point.pos_x + leftWall.width;
+            rightLimit = net.point.pos_x;
+        } else {
+            leftLimit = net.point.pos_x + net.width;
+            rightLimit = rightWall.point.pos_x;
         }
 
-        // starting position set to the center of our half of the volleyball court
+        // starting position set to the exact center of our half of the volleyball court
         double px = (leftLimit + rightLimit) / 2;
-        double py = ground.point.y;
+        double py = ground.point.pos_y;
 
+        // placeholders for real constants; they may be migrated to another class, don't get used to 'em
+        final double dx = 0;
+        final double rad = 0;
+        final double vel = 0;
         animal = new Animal(px, py, dx, rad, vel, leftLimit, rightLimit);
 
+        this.colour = colour;
         // and what do do with the colour?
     }
 
     public void moveDecision(int direction) {
-        // implementation goes here
+        animal.move(direction);
     }
+}
+
+// remove before merging with master
+class Animal {
+    public Animal(double px, double py, double dx, double rad, double vel, double limitLeft, double limitRight) {}
+    public void move(int num) {}
+}
+
+class StaticEntity {
+    public static List<StaticEntity> list_of_staticEntity;
+    public Point point;
+    public double width;
+}
+
+class Point {
+    public double pos_x;
+    public double pos_y;
 }
