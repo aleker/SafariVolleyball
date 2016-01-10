@@ -51,7 +51,6 @@ public abstract class SceneWrapper extends Scene {
             public void handle(long currentTime) {
                 double time = (currentTime - startTime) / 1000000000.0;
 
-                System.out.println(time);
                 handleEvents();
                 update();
                 stage.show();
@@ -72,10 +71,19 @@ public abstract class SceneWrapper extends Scene {
         else if(pane != null) pane.getChildren().add(entity);
     }
 
+    public void addEntity(StaticEntity entity) {
+        ImageView imageView = new ImageView();
+        imageView.setImage(entity.image);
+        if(group != null) group.getChildren().add(imageView);
+        else if(pane != null) pane.getChildren().add(imageView);
+    }
+
     public void addBackground(Image background) {
         this.background = background;
         ImageView imageView = new ImageView();
         imageView.setImage(background);
+        imageView.setFitWidth(this.width);
+        imageView.setFitHeight(this.height);
         this.group.getChildren().add(0,imageView);
     }
 
