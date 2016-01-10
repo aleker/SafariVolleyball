@@ -27,10 +27,10 @@ public class Menu extends SceneWrapper {
     public void initialize() {
         // button Menu
         this.addBackground(new Image("file:src/Pictures/background.png"));
-        Button b_newGame = new Button("New Game (go to Gameplay)");
-        b_newGame.setStyle("-fx-focus-color: #FF9933; -fx-font: 22 verdana; -fx-base: #FFFF66;");
+        Button b_newGame = new Button("New Game");
+        b_newGame.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
         b_newGame.setOnAction(e -> this.exit(new Gameplay(new Group(), this.game, 800, 600)));
-        b_newGame.setLayoutX(200);
+        b_newGame.setLayoutX(300);
         b_newGame.setLayoutY(200);
 //        DropShadow shadow = new DropShadow();
 //        shadow.setColor(Color.ORANGERED);
@@ -47,17 +47,17 @@ public class Menu extends SceneWrapper {
         // button Change Player
         Button b_changePlayer = new Button("Change Player");
         b_changePlayer.setOnAction(e -> this.changePlayer());
-        b_changePlayer.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66; -fx-background-color: transparent");
-        b_changePlayer.setLayoutX(200);
-        b_changePlayer.setLayoutY(300);
+        b_changePlayer.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
+        b_changePlayer.setLayoutX(300);
+        b_changePlayer.setLayoutY(250);
         this.addEntity(b_changePlayer);
 
         // button Exit
         Button b_close = new Button("Exit");
         b_close.setOnAction(e -> this.quit());
         b_close.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
-        b_close.setLayoutX(200);
-        b_close.setLayoutY(400);
+        b_close.setLayoutX(300);
+        b_close.setLayoutY(300);
         this.addEntity(b_close);
     }
 

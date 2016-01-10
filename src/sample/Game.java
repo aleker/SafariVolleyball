@@ -17,7 +17,7 @@ public class Game extends Application {
         primaryStage.setTitle("Safari Volleyball");
 
         Group root = new Group();
-        Menu scene = new Menu(root, this, 800, 600);
+        Menu scene = new Menu(root, this, 600, 400);
         launchScene(scene);
     }
 

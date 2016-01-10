@@ -24,13 +24,17 @@ public class Result extends SceneWrapper {
         // button New Game
         Button b_newGame = new Button("New Game (go to Menu)");
         b_newGame.setOnAction(e -> this.exit(new Menu(new Group(), this.game, 600, 400)));
+        b_newGame.setStyle("-fx-focus-color: #FF9933; -fx-font: 22 verdana; -fx-base: #FFFF66;");
+        b_newGame.setLayoutX(300);
+        b_newGame.setLayoutY(200);
         this.addEntity(b_newGame);
 
         // button Exit
         Button b_close = new Button("Exit");
         b_close.setOnAction(e -> this.quit());
-        b_close.setLayoutX(200);
-        b_close.setLayoutY(400);
+        b_close.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
+        b_close.setLayoutX(300);
+        b_close.setLayoutY(250);
         this.addEntity(b_close);
     }
 
