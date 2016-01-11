@@ -49,8 +49,7 @@ public class DynamicEntity extends StaticEntity {
         this.point.pos_x +=vel_x;
         this.point.pos_y +=vel_y;
         this.vel_y +=gameConstant.C_GRAVITY;
-        System.out.println("pos_x "+ this.point.pos_x + " pos_y "+ this.point.pos_y);
-        System.out.println("vel_x " + this.vel_x + " vel_y " + this.vel_y);
+
     }
 
 
