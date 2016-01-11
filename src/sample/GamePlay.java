@@ -69,9 +69,9 @@ public class GamePlay extends SceneWrapper {
     }
     public void createEntities() {
         leftwall = new StaticEntity(0,0);
-        rightwall = new StaticEntity(700,0);
+        rightwall = new StaticEntity(800,0);
         ceiling = new StaticEntity(0,0);
-        ground = new StaticEntity(0,700);
+        ground = new StaticEntity(0,600);
         net = new StaticEntity("Pictures/net.png",400,231);
         ball = new DynamicEntity("Pictures/ball.png");
     }
