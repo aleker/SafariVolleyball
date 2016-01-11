@@ -23,6 +23,7 @@ public class DynamicEntity extends StaticEntity {
     public boolean change_direction = false;
     public Point net_top_center = getNetTopCenter();
     public boolean top_net_collision = false;
+    private Intersect_enum last_collision;
 
     public enum Intersect_enum{
         LEFT_WALL(false),
@@ -48,6 +49,8 @@ public class DynamicEntity extends StaticEntity {
         this.point.pos_x +=vel_x;
         this.point.pos_y +=vel_y;
         this.vel_y +=gameConstant.C_GRAVITY;
+        System.out.println("pos_x "+ this.point.pos_x + " pos_y "+ this.point.pos_y);
+        System.out.println("vel_x " + this.vel_x + " vel_y " + this.vel_y);
     }
 
 
@@ -132,37 +135,62 @@ public class DynamicEntity extends StaticEntity {
     }
 
     public void intersect(){
-
+        //   int col_left_wall;
         Intersect_enum intersect_enum = Intersect_enum.LEFT_WALL;
         if(this.point.pos_x< 0){ // collison with left wall
-            intersect_enum.setStatus(true);
-        }
+            if(last_collision!=Intersect_enum.LEFT_WALL){
+                intersect_enum.setStatus(true);
+                last_collision = Intersect_enum.LEFT_WALL;
+            }
 
-        if( this.point.pos_x + this.width > 512){ // collision with right wall
-            intersect_enum = Intersect_enum.RIGHT_WALL;
-            intersect_enum.setStatus(true);
         }
+        // int col_right_wall;
+        if( this.point.pos_x + this.width > 800){ // collision with right wall
+            if(last_collision!=Intersect_enum.RIGHT_WALL){
+                intersect_enum = Intersect_enum.RIGHT_WALL;
+                intersect_enum.setStatus(true);
+                last_collision = Intersect_enum.RIGHT_WALL;
+            }
 
+        }
+        //  int col_ceiling;
         if(this.point.pos_y < 0){ // collision with ceiling
-            intersect_enum = Intersect_enum.CEILING;
-            intersect_enum.setStatus(true);
-        }
+            if(last_collision!=Intersect_enum.CEILING){
+                intersect_enum = Intersect_enum.CEILING;
+                intersect_enum.setStatus(true);
+                last_collision = Intersect_enum.CEILING;
+            }
 
-        if(this.point.pos_y + this.height> 512){ // collison with ground
-            intersect_enum = Intersect_enum.GROUND;
-            intersect_enum.setStatus(true);
-        }
-        if (distanceBetweenTwoPoints(net_top_center,this.center_point)< this.radius + 5 + list_of_staticEntity.get(4).width/2  ){// collision with net
-            intersect_enum = Intersect_enum.NET;
-            intersect_enum.setStatus(true);
-            top_net_collision = true;
 
         }
-            if (this.center_point.pos_y>net_top_center.pos_y ){  // collision with net
-            if(this.point.pos_x + this.width > list_of_staticEntity.get(4).point.pos_x &&
-                    this.point.pos_x < list_of_staticEntity.get(4).point.pos_x +  list_of_staticEntity.get(4).width){
+        if(this.point.pos_y + this.height> 600){ // collison with ground
+            if(last_collision!=Intersect_enum.GROUND){
+                intersect_enum = Intersect_enum.GROUND;
+                intersect_enum.setStatus(true);
+                last_collision = Intersect_enum.GROUND;
+            }
+
+
+        }
+        if (distanceBetweenTwoPoints(net_top_center,this.center_point)< this.radius + 15 + list_of_staticEntity.get(4).width/2  ){// collision with net
+            if(last_collision!=Intersect_enum.NET){
                 intersect_enum = Intersect_enum.NET;
                 intersect_enum.setStatus(true);
+                top_net_collision = true;
+                last_collision = Intersect_enum.NET;
+            }
+
+
+        }
+        if (this.center_point.pos_y>net_top_center.pos_y ){  // collision with net
+            if(this.point.pos_x + this.width > list_of_staticEntity.get(4).point.pos_x &&
+                    this.point.pos_x < list_of_staticEntity.get(4).point.pos_x +  list_of_staticEntity.get(4).width){
+                if(last_collision!=Intersect_enum.NET){
+                    intersect_enum = Intersect_enum.NET;
+                    intersect_enum.setStatus(true);
+                    last_collision = Intersect_enum.NET;
+                }
+
 
             }
         }

@@ -20,6 +20,11 @@ public class StaticEntity {
         setHeight();
         setCenterPoint();
     }
+    StaticEntity( double pos_x, double pos_y){
+        this.gameConstant = new GameConstant();
+        this.point = new Point(pos_x,pos_y);
+        list_of_staticEntity.add(this);
+    }
     StaticEntity(){}
     GameConstant gameConstant;
     public  class Point{
