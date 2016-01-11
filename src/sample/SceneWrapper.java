@@ -29,9 +29,10 @@ public abstract class SceneWrapper extends Scene {
         this.root = root;
         this.pane = root;
         initialize();
+        handleEvents();
     }
 
-    public SceneWrapper(Group root, Game game, int windowWidth, int windowHeight/*, Background background*/) {
+    public SceneWrapper(Group root, Game game, int windowWidth, int windowHeight) {
         super(root, windowWidth, windowHeight);
         this.game = game;
         this.width = windowWidth;
@@ -39,9 +40,12 @@ public abstract class SceneWrapper extends Scene {
         this.root = root;
         this. group = root;
         initialize();
+        handleEvents();
     }
 
     public abstract void initialize();
+
+    public abstract void handleEvents();
 
     public void run(final Stage stage) {
         final long startTime = System.nanoTime();
@@ -51,14 +55,11 @@ public abstract class SceneWrapper extends Scene {
             public void handle(long currentTime) {
                 double time = (currentTime - startTime) / 1000000000.0;
 
-                handleEvents();
                 update();
                 stage.show();
             }
         }.start();
     }
-
-    public abstract void handleEvents();
 
     public abstract void update();
 
@@ -71,10 +72,19 @@ public abstract class SceneWrapper extends Scene {
         else if(pane != null) pane.getChildren().add(entity);
     }
 
+    public void addEntity(StaticEntity entity) {
+        ImageView imageView = new ImageView();
+        imageView.setImage(entity.image);
+        if(group != null) group.getChildren().add(imageView);
+        else if(pane != null) pane.getChildren().add(imageView);
+    }
+
     public void addBackground(Image background) {
         this.background = background;
         ImageView imageView = new ImageView();
         imageView.setImage(background);
+        imageView.setFitWidth(this.width);
+        imageView.setFitHeight(this.height);
         this.group.getChildren().add(0,imageView);
     }
 

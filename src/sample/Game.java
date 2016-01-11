@@ -2,7 +2,6 @@ package sample;
 
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Game extends Application {
@@ -14,6 +13,7 @@ public class Game extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
 
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Safari Volleyball");
 
         Group root = new Group();
