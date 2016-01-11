@@ -28,6 +28,7 @@ public class Menu extends SceneWrapper {
     @Override
     public void initialize() {
         this.addBackground(new Image("file:src/Pictures/background.png"));
+        final GridPane grid = (GridPane) getRoot();
 
         // CHANGE PLAYER
         // labels
@@ -35,12 +36,14 @@ public class Menu extends SceneWrapper {
         leftPlayerLabel.setStyle("-fx-font: 16 verdana; -fx-text-fill: snow");
         leftPlayerLabel.setLayoutX(270);
         leftPlayerLabel.setLayoutY(200);
-        this.addEntity(leftPlayerLabel);
+        //this.addEntity(leftPlayerLabel);
         final Label rightPlayerLabel = new Label("Right Player:");
         rightPlayerLabel.setStyle("-fx-font: 16 verdana; -fx-text-fill: snow");
         rightPlayerLabel.setLayoutX(270);
         rightPlayerLabel.setLayoutY(250);
-        this.addEntity(rightPlayerLabel);
+        //this.addEntity(rightPlayerLabel);
+        grid.add(leftPlayerLabel, 0, 1);
+        grid.add(rightPlayerLabel, 0, 2);
 
         // ComboBoxes
         final ComboBox<String> leftPlayerComboBox = new ComboBox<String>();
@@ -55,8 +58,11 @@ public class Menu extends SceneWrapper {
         leftPlayerComboBox.setLayoutY(200);
         rightPlayerComboBox.setLayoutX(400);
         rightPlayerComboBox.setLayoutY(250);
-        this.addEntity(leftPlayerComboBox);
-        this.addEntity(rightPlayerComboBox);
+        //this.addEntity(leftPlayerComboBox);
+        //this.addEntity(rightPlayerComboBox);
+        grid.add(leftPlayerComboBox, 1, 1);
+        grid.add(rightPlayerComboBox, 1, 2);
+
 
         // NEW GAME
         Button b_newGame = new Button("Start");
@@ -65,14 +71,16 @@ public class Menu extends SceneWrapper {
             System.out.println(leftPlayerComboBox.getSelectionModel().getSelectedIndex());
             System.out.print("right_index ");
             System.out.println(rightPlayerComboBox.getSelectionModel().getSelectedIndex());
-            this.exit(new GamePlay(new Group(), this.game, 800, 600,
-                        leftPlayerComboBox.getSelectionModel().getSelectedIndex(),
-                        rightPlayerComboBox.getSelectionModel().getSelectedIndex()));
+            GamePlay game = new GamePlay(new Group(), this.game, 800, 600);
+            game.setLeft_index(leftPlayerComboBox.getSelectionModel().getSelectedIndex());
+            game.setRight_index(rightPlayerComboBox.getSelectionModel().getSelectedIndex());
+            this.exit(game);
         });
         b_newGame.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
         b_newGame.setLayoutX(400);
         b_newGame.setLayoutY(300);
-        this.addEntity(b_newGame);
+        //this.addEntity(b_newGame);
+        grid.add(b_newGame, 0, 3, 2, 1);
 
         // EXIT
         Button b_close = new Button("Exit");
@@ -80,7 +88,8 @@ public class Menu extends SceneWrapper {
         b_close.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
         b_close.setLayoutX(270);
         b_close.setLayoutY(300);
-        this.addEntity(b_close);
+        //this.addEntity(b_close);
+        grid.add(b_close, 0, 3, 2, 2);
     }
 
     @Override
