@@ -51,7 +51,7 @@ public class GamePlay extends SceneWrapper {
     }
 
     @Override
-    public void update() {
+    public void update(double deltaTime) {
         ball.detectStaticCollison();
         ball.calculateNewPosition();
         gc.clearRect(0, 0, 800,600);

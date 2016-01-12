@@ -67,7 +67,7 @@ public class Menu extends SceneWrapper {
     }
 
     @Override
-    public void update() {
+    public void update(double deltaTime) {
 
     }
 

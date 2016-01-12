@@ -19,12 +19,13 @@ public class Game extends Application {
         Group root = new Group();
         Menu scene = new Menu(root, this, 600, 400);
         launchScene(scene);
+        stage.show();
     }
 
     public void launchScene(SceneWrapper scene) {
         this.currentScene = scene;
         this.stage.setScene(scene);
-        scene.run(this.stage);
+        scene.run();
     }
 
     public static void main(String[] args) {
