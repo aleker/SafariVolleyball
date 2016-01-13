@@ -7,11 +7,17 @@ import java.lang.reflect.Constructor;
  */
 public class PlayerList {
     public static final Class<?>[] playerList = {Player.class, AI.class};
-    public static Player newPlayer(int index, int side) throws Exception {
-        @SuppressWarnings("unchecked")
-        final Class<? extends Player> playerClass = (Class<? extends Player>) playerList[index];
-        final Constructor<? extends Player> playerConstructor = playerClass.getConstructor(int.class);
-        return playerConstructor.newInstance(side);
+    public static Player newPlayer(int index, int side) {
+        try {
+            @SuppressWarnings("unchecked")
+            final Class<? extends Player> playerClass = (Class<? extends Player>) playerList[index];
+            final Constructor<? extends Player> playerConstructor = playerClass.getConstructor(int.class);
+            final Player player = playerConstructor.newInstance(side);
+            return player;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 }
 
