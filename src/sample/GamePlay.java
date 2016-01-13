@@ -14,7 +14,7 @@ import javafx.scene.layout.*;
 
 public class GamePlay extends SceneWrapper {
 
-    // Player playerList[];
+    Player listOfPlayers[];
     int points[];
     private static boolean playing;
     private DynamicEntity ball;
@@ -24,6 +24,25 @@ public class GamePlay extends SceneWrapper {
     private StaticEntity ground;
     private StaticEntity net;
     private GraphicsContext gc;
+    public int Left_index;
+
+    public int getRight_index() {
+        return Right_index;
+    }
+
+    public void setRight_index(int right_index) {
+        Right_index = right_index;
+    }
+
+    public int getLeft_index() {
+        return Left_index;
+    }
+
+    public void setLeft_index(int left_index) {
+        Left_index = left_index;
+    }
+
+    public int Right_index;
 
     public GamePlay(Group root, Game game, int windowWidth, int windowHeight) {
         super(root, game, windowWidth, windowHeight);
@@ -80,12 +99,12 @@ public class GamePlay extends SceneWrapper {
         ball = new DynamicEntity("Pictures/ball.png");
     }
 
-    public void createPlayer() {}
+    public void createPlayer() {
+        //listOfPlayers[0] =  PlayerList.newPlayer(Left_index, Player.LEFT_SIDE);
+        //listOfPlayers[1] = PlayerList.playerList.newPlayer(Left_index, Player.RIGHT_SIDE);
+    }
+
     public void setNewServe(int player_number) {
-//        player_list[0].animal.startPosition();
-//        player_list[0].animal.startPosition();
-//        Point pointForBall = new Point(player_list[player_number].animal.px, player_list[player_number].animal.py - 40);
-//        ball.p
 
     }
 
