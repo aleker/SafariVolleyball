@@ -6,6 +6,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.application.*;
 import javafx.scene.image.Image;
+
+import java.awt.*;
 import java.lang.Exception;
 import javafx.stage.*;
 import javafx.scene.layout.*;
@@ -36,6 +38,7 @@ public class GamePlay extends SceneWrapper {
         gc = canvas.getGraphicsContext2D();
         group.getChildren().add(canvas);
         createEntities();
+
         // temporary
         Button b_result = new Button("Go to Result_scene");
         b_result.setOnAction(e -> this.exit(new Result(new Group(), this.game, 800, 600)));
@@ -78,6 +81,12 @@ public class GamePlay extends SceneWrapper {
     }
 
     public void createPlayer() {}
-    public void setNewServe() {}
+    public void setNewServe(int player_number) {
+//        player_list[0].animal.startPosition();
+//        player_list[0].animal.startPosition();
+//        Point pointForBall = new Point(player_list[player_number].animal.px, player_list[player_number].animal.py - 40);
+//        ball.p
+
+    }
 
 }
