@@ -12,8 +12,7 @@ public class PlayerList {
             @SuppressWarnings("unchecked")
             final Class<? extends Player> playerClass = (Class<? extends Player>) playerList[index];
             final Constructor<? extends Player> playerConstructor = playerClass.getConstructor(int.class);
-            final Player player = playerConstructor.newInstance(side);
-            return player;
+            return playerConstructor.newInstance(side);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
