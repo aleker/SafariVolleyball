@@ -9,12 +9,14 @@ import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.lang.Exception;
+
+import javafx.scene.input.KeyCode;
 import javafx.stage.*;
 import javafx.scene.layout.*;
 
 public class GamePlay extends SceneWrapper {
 
-    // Player playerList[];
+    Player listOfPlayers[];
     int points[];
     private static boolean playing;
     private DynamicEntity ball;
@@ -51,7 +53,14 @@ public class GamePlay extends SceneWrapper {
 
     @Override
     public void handleEvents() {
-
+        this.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode() == KeyCode.LEFT) listOfPlayers[Player.RIGHT_SIDE].moveDecision(4);
+            if(keyEvent.getCode() == KeyCode.RIGHT) listOfPlayers[Player.RIGHT_SIDE].moveDecision(6);
+            if(keyEvent.getCode() == KeyCode.UP) listOfPlayers[Player.RIGHT_SIDE].moveDecision(8);
+            if(keyEvent.getCode() == KeyCode.A) listOfPlayers[Player.LEFT_SIDE].moveDecision(4);
+            if(keyEvent.getCode() == KeyCode.D) listOfPlayers[Player.LEFT_SIDE].moveDecision(6);
+            if(keyEvent.getCode() == KeyCode.W) listOfPlayers[Player.LEFT_SIDE].moveDecision(8);
+        });
     }
 
     @Override
