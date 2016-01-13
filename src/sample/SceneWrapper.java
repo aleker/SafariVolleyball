@@ -13,13 +13,15 @@ import javafx.stage.Stage;
 
 public abstract class SceneWrapper extends Scene {
 
-    Game game;
-    int width;
-    int height;
-    Parent root = null;
-    Pane pane = null;
-    Group group = null;
-    Image background;
+    // as none of these fields is accessed from within another class it's better to keep them private
+    private int width;
+    private int height;
+    private Parent root = null;
+    private Pane pane = null;
+
+    public Game game;
+    public Group group = null;
+    public Image background;
 
     public SceneWrapper(Pane root, Game game, int windowWidth, int windowHeight) {
         super(root, windowWidth, windowHeight);
@@ -38,7 +40,7 @@ public abstract class SceneWrapper extends Scene {
         this.width = windowWidth;
         this.height = windowHeight;
         this.root = root;
-        this. group = root;
+        this.group = root;
         initialize();
         handleEvents();
     }
@@ -47,21 +49,32 @@ public abstract class SceneWrapper extends Scene {
 
     public abstract void handleEvents();
 
-    public void run(final Stage stage) {
-        final long startTime = System.nanoTime();
-
+    public void run() {
         new AnimationTimer() {
+            private long previousCallTime;
+
+            @Override
+            public void start() {
+                previousCallTime = System.nanoTime();
+                super.start();
+            }
+
             @Override
             public void handle(long currentTime) {
-                double time = (currentTime - startTime) / 1000000000.0;
+                double deltaTime = (currentTime - previousCallTime) / 1000000000.0;
 
-                update();
-                stage.show();
+                update(deltaTime);
+
+                // stage.show() only changes the visibility setting of the stage
+                // in fact we don't need to do anything to update the screen -- it's done automatically after this
+                // function ends
+
+                previousCallTime = currentTime;
             }
         }.start();
     }
 
-    public abstract void update();
+    public abstract void update(double deltaTime);
 
     public void exit(SceneWrapper newScene) {
         this.game.launchScene(newScene);
@@ -89,4 +102,3 @@ public abstract class SceneWrapper extends Scene {
     }
 
 }
-

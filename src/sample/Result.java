@@ -56,7 +56,7 @@ public class Result extends SceneWrapper {
 
     }
     @Override
-    public void update() {
+    public void update(double deltaTime) {
 
     }
     public void quit() { this.game.stage.close(); }
