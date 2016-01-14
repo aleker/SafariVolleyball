@@ -52,8 +52,8 @@ public class DynamicEntity extends StaticEntity {
 
     }
 
-    private void setNewSetPosition(boolean side){
-        if(side){ //left side
+    public void setNewSetPosition(int side){
+        if(side == 0){ //left side
             this.point.pos_x = 600;
             this.point.pos_y = 100;
 

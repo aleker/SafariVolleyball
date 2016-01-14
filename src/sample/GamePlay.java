@@ -41,17 +41,17 @@ public class GamePlay extends SceneWrapper {
 
         points = new int[2];
         this.addBackground(new Image("file:src/Pictures/background.png"));
-        Canvas canvas = new Canvas(800,600);
+        Canvas canvas = new Canvas(800, 600);
         gc = canvas.getGraphicsContext2D();
         group.getChildren().add(canvas);
         createPlayers();
         createEntities();
 
-        // temporary
+        // temporary button
         Button b_result = new Button("Go to Result_scene");
         b_result.setOnAction(e -> this.exit(new Result(new Group(), this.game, 800, 600)));
         this.addEntity(b_result);
-        //end temporary
+        //end temporary button
 
     }
 
@@ -64,13 +64,13 @@ public class GamePlay extends SceneWrapper {
     public void update(double deltaTime) {
         ball.detectStaticCollison();
         ball.calculateNewPosition();
-        gc.clearRect(0, 0, 800,600);
+        gc.clearRect(0, 0, 800, 600);
         ball.setCenterPoint();
         ball.detectStaticCollison();
         ball.calculateNewPosition();
-        gc.drawImage( background, 0, 0 );
-        gc.drawImage(net.image,net.point.pos_x,net.point.pos_y);
-        gc.drawImage(ball.image,ball.point.pos_x,ball.point.pos_y);
+        gc.drawImage(background, 0, 0);
+        gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
+        gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
 
     }
 
@@ -79,11 +79,11 @@ public class GamePlay extends SceneWrapper {
     }
 
     public void createEntities() {
-        leftwall = new StaticEntity(0,0);
-        rightwall = new StaticEntity(800,0);
-        ceiling = new StaticEntity(0,0);
-        ground = new StaticEntity(0,600);
-        net = new StaticEntity("Pictures/net.png",400,231);
+        leftwall = new StaticEntity(0, 0);
+        rightwall = new StaticEntity(800, 0);
+        ceiling = new StaticEntity(0, 0);
+        ground = new StaticEntity(0, 600);
+        net = new StaticEntity("Pictures/net.png", 400, 231);
         ball = new DynamicEntity("Pictures/ball.png");
     }
 
@@ -93,6 +93,7 @@ public class GamePlay extends SceneWrapper {
         listOfPlayers[1] = PlayerList.newPlayer(Right_index, Player.RIGHT_SIDE);
 
         // colour = 0 -> it will be changed so the value will return appropriate colour of animal
+        // createAnimal not working!
         //listOfPlayers[0].createAnimal(0);
         //listOfPlayers[1].createAnimal(1);
 
@@ -103,24 +104,7 @@ public class GamePlay extends SceneWrapper {
     public void setNewServe(int player_number) {
         listOfPlayers[0].animal.startPos();
         listOfPlayers[1].animal.startPos();
-        Point pointForBall = new Point((int)listOfPlayers[player_number].animal.getCenter().pos_x,
-                (int)listOfPlayers[player_number].animal.getCenter().pos_y - 40);
-        // ball.setPosition(pointForBall);
+        ball.setNewSetPosition(player_number);
     }
 
-    public int getRight_index() {
-        return Right_index;
-    }
-
-    public void setRight_index(int right_index) {
-        Right_index = right_index;
-    }
-
-    public int getLeft_index() {
-        return Left_index;
-    }
-
-    public void setLeft_index(int left_index) {
-        Left_index = left_index;
-    }
 }
