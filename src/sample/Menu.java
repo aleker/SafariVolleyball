@@ -59,17 +59,21 @@ public class Menu extends SceneWrapper {
         grid.add(leftPlayerComboBox, 1, 1);
         grid.add(rightPlayerComboBox, 1, 2);
 
-
         // NEW GAME
         Button b_newGame = new Button("Start");
         b_newGame.setOnAction(e -> {
-            GamePlay game = new GamePlay(new Group(), this.game, 800, 600);
-            game.setLeft_index(leftPlayerComboBox.getSelectionModel().getSelectedIndex());
-            game.setRight_index(rightPlayerComboBox.getSelectionModel().getSelectedIndex());
+            GamePlay game = new GamePlay(new Group(), this.game, 800, 600,
+                    leftPlayerComboBox.getSelectionModel().getSelectedIndex(),
+                    rightPlayerComboBox.getSelectionModel().getSelectedIndex());
+            System.out.println("In Menu");
+            System.out.println(leftPlayerComboBox.getSelectionModel().getSelectedIndex());
+            System.out.println(rightPlayerComboBox.getSelectionModel().getSelectedIndex());
+            //game.setLeft_index(leftPlayerComboBox.getSelectionModel().getSelectedIndex());
+            //game.setRight_index(rightPlayerComboBox.getSelectionModel().getSelectedIndex());
             this.exit(game);
-            b_newGame.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
-            grid.add(b_newGame, 1, 3, 2, 1);
         });
+        b_newGame.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
+        grid.add(b_newGame, 1, 3, 2, 1);
 
         // EXIT
         Button b_close = new Button("Exit");
