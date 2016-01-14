@@ -4,15 +4,9 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.application.*;
 import javafx.scene.image.Image;
 
-import java.awt.*;
-import java.lang.Exception;
-
 import javafx.scene.input.KeyCode;
-import javafx.stage.*;
-import javafx.scene.layout.*;
 
 public class GamePlay extends SceneWrapper {
 
@@ -60,6 +54,7 @@ public class GamePlay extends SceneWrapper {
             if(keyEvent.getCode() == KeyCode.A) listOfPlayers[Player.LEFT_SIDE].moveDecision(4);
             if(keyEvent.getCode() == KeyCode.D) listOfPlayers[Player.LEFT_SIDE].moveDecision(6);
             if(keyEvent.getCode() == KeyCode.W) listOfPlayers[Player.LEFT_SIDE].moveDecision(8);
+            if(keyEvent.getCode() == KeyCode.ESCAPE) this.exit(new Menu(new Group(), this.game, 600, 400));
         });
     }
 
@@ -97,5 +92,4 @@ public class GamePlay extends SceneWrapper {
 //        ball.p
 
     }
-
 }
