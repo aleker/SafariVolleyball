@@ -25,6 +25,8 @@ public class Menu extends SceneWrapper {
 
     public Menu(Group root, Game game, int windowWidth, int windowHeight) {
         super(root, game, windowWidth, windowHeight);
+        initialize();
+        handleEvents();
     }
 
     @Override
@@ -59,10 +61,14 @@ public class Menu extends SceneWrapper {
         grid.add(leftPlayerComboBox, 1, 1);
         grid.add(rightPlayerComboBox, 1, 2);
 
-
         // NEW GAME
         Button b_newGame = new Button("Start");
-        b_newGame.setOnAction(e -> this.exit(new GamePlay(new Group(), this.game, 800, 600)));
+        b_newGame.setOnAction(e -> {
+            GamePlay game = new GamePlay(new Group(), this.game, 800, 600,
+                    leftPlayerComboBox.getSelectionModel().getSelectedIndex(),
+                    rightPlayerComboBox.getSelectionModel().getSelectedIndex());
+            this.exit(game);
+        });
         b_newGame.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");
         grid.add(b_newGame, 1, 3, 2, 1);
 

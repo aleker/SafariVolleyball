@@ -16,6 +16,8 @@ public class Result extends SceneWrapper {
 
     public Result(Group root, Game game, int windowWidth, int windowHeight) {
         super(root, game, windowWidth, windowHeight);
+        initialize();
+        handleEvents();
     }
 
     @Override

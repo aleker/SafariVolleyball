@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Player {
     // all instance members of reference type are initialized to null
-    private Animal animal;
+    public Animal animal;
 
     // British English spelling just to annoy programmers
     private int colour;
