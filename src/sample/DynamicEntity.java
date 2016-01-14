@@ -52,6 +52,17 @@ public class DynamicEntity extends StaticEntity {
 
     }
 
+    private void setNewSetPosition(boolean side){
+        if(side){ //left side
+            this.point.pos_x = 600;
+            this.point.pos_y = 100;
+
+        }
+        else{ //right side
+            this.point.pos_x = 200;
+            this.point.pos_y = 100;
+        }
+    }
 
     public void detectStaticCollison( ) {
         this.intersect();
@@ -193,6 +204,7 @@ public class DynamicEntity extends StaticEntity {
 
             }
         }
+
 
 
     }
