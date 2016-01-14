@@ -25,6 +25,8 @@ public class Menu extends SceneWrapper {
 
     public Menu(Group root, Game game, int windowWidth, int windowHeight) {
         super(root, game, windowWidth, windowHeight);
+        initialize();
+        handleEvents();
     }
 
     @Override
@@ -65,11 +67,6 @@ public class Menu extends SceneWrapper {
             GamePlay game = new GamePlay(new Group(), this.game, 800, 600,
                     leftPlayerComboBox.getSelectionModel().getSelectedIndex(),
                     rightPlayerComboBox.getSelectionModel().getSelectedIndex());
-            System.out.println("In Menu");
-            System.out.println(leftPlayerComboBox.getSelectionModel().getSelectedIndex());
-            System.out.println(rightPlayerComboBox.getSelectionModel().getSelectedIndex());
-            //game.setLeft_index(leftPlayerComboBox.getSelectionModel().getSelectedIndex());
-            //game.setRight_index(rightPlayerComboBox.getSelectionModel().getSelectedIndex());
             this.exit(game);
         });
         b_newGame.setStyle("-fx-focus-color: #FF9933; -fx-font: 18 verdana; -fx-base: #FFFF66;");

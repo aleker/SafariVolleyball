@@ -28,7 +28,6 @@ public class Player {
 
     public Player(int side) {
         this.side = side;
-        System.out.println("Player-human has been created");
     }
 
     public void createAnimal(int colour) {

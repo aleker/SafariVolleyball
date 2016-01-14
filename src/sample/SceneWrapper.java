@@ -40,8 +40,6 @@ public abstract class SceneWrapper extends Scene {
         this.height = windowHeight;
         this.root = root;
         this.group = root;
-        initialize();
-        handleEvents();
     }
 
     public abstract void initialize();
