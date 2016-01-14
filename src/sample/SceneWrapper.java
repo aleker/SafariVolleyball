@@ -1,27 +1,26 @@
 package sample;
 
-import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Control;
+import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
+import javafx.scene.control.Control;
 
 
 public abstract class SceneWrapper extends Scene {
 
-    // as none of these fields is accessed from within another class it's better to keep them private
-    private int width;
-    private int height;
-    private Parent root = null;
-    private Pane pane = null;
+    protected int width;
+    protected int height;
 
-    public Game game;
-    public Group group = null;
-    public Image background;
+    protected Parent root = null;
+    protected Pane pane = null;
+    protected Game game;
+    protected Group group = null;
+
+    protected Image background;
 
     public SceneWrapper(Pane root, Game game, int windowWidth, int windowHeight) {
         super(root, windowWidth, windowHeight);
@@ -64,10 +63,6 @@ public abstract class SceneWrapper extends Scene {
                 double deltaTime = (currentTime - previousCallTime) / 1000000000.0;
 
                 update(deltaTime);
-
-                // stage.show() only changes the visibility setting of the stage
-                // in fact we don't need to do anything to update the screen -- it's done automatically after this
-                // function ends
 
                 previousCallTime = currentTime;
             }
