@@ -54,7 +54,7 @@ public class Player {
         final double dx = 0;
         final double rad = 0;
         final double vel = 0;
-        animal = new Animal(0, "Pictures/lion_brown.png");
+        animal = new Animal(side, "Pictures/lion_brown.png");
 
         this.colour = colour;
         // and what do do with the colour?
