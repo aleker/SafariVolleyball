@@ -68,7 +68,7 @@ public class GamePlay extends SceneWrapper {
         ball.setCenterPoint();
         ball.detectStaticCollison();
         ball.calculateNewPosition();
-        gc.drawImage(background, 0, 0);
+        gc.drawImage(background, 0, 0, this.width, this.height);
         gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
         gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
 
