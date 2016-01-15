@@ -44,8 +44,9 @@ public class GamePlay extends SceneWrapper {
         Canvas canvas = new Canvas(800, 600);
         gc = canvas.getGraphicsContext2D();
         group.getChildren().add(canvas);
-        createPlayers();
         createEntities();
+        // entities should be created before players
+        createPlayers();
 
         // temporary button
         Button b_result = new Button("Go to Result_scene");
@@ -68,10 +69,17 @@ public class GamePlay extends SceneWrapper {
         ball.setCenterPoint();
         ball.detectStaticCollison();
         ball.calculateNewPosition();
+        listOfPlayers[0].animal.calculateNewPosition();
+        listOfPlayers[1].animal.calculateNewPosition();
+        listOfPlayers[0].animal.detectStaticCollison();
+        listOfPlayers[1].animal.detectStaticCollison();
+        ball.detectDynamicCollision(listOfPlayers[0].animal);
+        ball.detectDynamicCollision(listOfPlayers[1].animal);
         gc.drawImage(background, 0, 0, this.width, this.height);
         gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
         gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
-
+        gc.drawImage(listOfPlayers[0].animal.image, listOfPlayers[0].animal.point.pos_x, listOfPlayers[0].animal.point.pos_y);
+        gc.drawImage(listOfPlayers[1].animal.image, listOfPlayers[1].animal.point.pos_x, listOfPlayers[1].animal.point.pos_y);
     }
 
     public static boolean stop() {
@@ -88,7 +96,7 @@ public class GamePlay extends SceneWrapper {
     }
 
     public void createPlayers() {
-        Player listOfPlayers[] = new Player[2];
+        listOfPlayers = new Player[2];
         listOfPlayers[0] = PlayerList.newPlayer(Left_index, Player.LEFT_SIDE);
         listOfPlayers[1] = PlayerList.newPlayer(Right_index, Player.RIGHT_SIDE);
 
