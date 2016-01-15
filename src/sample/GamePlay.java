@@ -6,8 +6,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 
-import javafx.scene.input.KeyCode;
-
 public class GamePlay extends SceneWrapper {
 
     Player listOfPlayers[];
@@ -23,7 +21,6 @@ public class GamePlay extends SceneWrapper {
     public int Left_index = 1;
     public int Right_index = 1;
 
-
     public GamePlay(Group root, Game game, int windowWidth, int windowHeight, int Left_index, int Right_index) {
         super(root, game, windowWidth, windowHeight);
         this.Left_index = Left_index;
@@ -36,6 +33,7 @@ public class GamePlay extends SceneWrapper {
     public void initialize() {
 
         points = new int[2];
+
         this.addBackground(new Image("file:src/Pictures/background.png"));
         Canvas canvas = new Canvas(800, 600);
         gc = canvas.getGraphicsContext2D();
@@ -55,13 +53,29 @@ public class GamePlay extends SceneWrapper {
     @Override
     public void handleEvents() {
         this.setOnKeyPressed(keyEvent -> {
-            if(keyEvent.getCode() == KeyCode.LEFT) listOfPlayers[Player.RIGHT_SIDE].moveDecision(listOfPlayers[Player.RIGHT_SIDE].animal.LEFT);
-            else if(keyEvent.getCode() == KeyCode.RIGHT) listOfPlayers[Player.RIGHT_SIDE].moveDecision(listOfPlayers[Player.RIGHT_SIDE].animal.RIGHT);
-            else if(keyEvent.getCode() == KeyCode.UP) listOfPlayers[Player.RIGHT_SIDE].moveDecision(listOfPlayers[Player.RIGHT_SIDE].animal.UP);
-            else if(keyEvent.getCode() == KeyCode.A) listOfPlayers[Player.LEFT_SIDE].moveDecision(listOfPlayers[Player.LEFT_SIDE].animal.LEFT);
-            else if(keyEvent.getCode() == KeyCode.D) listOfPlayers[Player.LEFT_SIDE].moveDecision(listOfPlayers[Player.LEFT_SIDE].animal.RIGHT);
-            else if(keyEvent.getCode() == KeyCode.W) listOfPlayers[Player.LEFT_SIDE].moveDecision(listOfPlayers[Player.LEFT_SIDE].animal.UP);
-            else if(keyEvent.getCode() == KeyCode.ESCAPE) this.exit(new Menu(new Group(), this.game, 600, 400));
+            switch (keyEvent.getCode()) {
+                case LEFT:
+                    listOfPlayers[Player.RIGHT_SIDE].moveDecision(listOfPlayers[Player.RIGHT_SIDE].animal.LEFT);
+                    break;
+                case RIGHT:
+                    listOfPlayers[Player.RIGHT_SIDE].moveDecision(listOfPlayers[Player.RIGHT_SIDE].animal.RIGHT);
+                    break;
+                case UP:
+                    listOfPlayers[Player.RIGHT_SIDE].moveDecision(listOfPlayers[Player.RIGHT_SIDE].animal.UP);
+                    break;
+                case A:
+                    listOfPlayers[Player.LEFT_SIDE].moveDecision(listOfPlayers[Player.LEFT_SIDE].animal.LEFT);
+                    break;
+                case D:
+                    listOfPlayers[Player.LEFT_SIDE].moveDecision(listOfPlayers[Player.LEFT_SIDE].animal.RIGHT);
+                    break;
+                case W:
+                    listOfPlayers[Player.LEFT_SIDE].moveDecision(listOfPlayers[Player.LEFT_SIDE].animal.UP);
+                    break;
+                case ESCAPE:
+                    this.exit(new Menu(new Group(), this.game, 600, 400));
+                    break;
+            }
         });
     }
 
@@ -113,5 +127,4 @@ public class GamePlay extends SceneWrapper {
 //        listOfPlayers[1].animal.startPos();
         ball.setNewSetPosition(player_number);
     }
-
 }
