@@ -94,16 +94,16 @@ public class GamePlay extends SceneWrapper {
 
         // colour = 0 -> it will be changed so the value will return appropriate colour of animal
         // createAnimal not working!
-        //listOfPlayers[0].createAnimal(0);
-        //listOfPlayers[1].createAnimal(1);
+        listOfPlayers[0].createAnimal(0);
+        listOfPlayers[1].createAnimal(1);
 
         //listOfPlayers[0].animal.startPos();
         //listOfPlayers[1].animal.startPos();
     }
 
     public void setNewServe(int player_number) {
-        listOfPlayers[0].animal.startPos();
-        listOfPlayers[1].animal.startPos();
+//        listOfPlayers[0].animal.startPos();
+//        listOfPlayers[1].animal.startPos();
         ball.setNewSetPosition(player_number);
     }
 
