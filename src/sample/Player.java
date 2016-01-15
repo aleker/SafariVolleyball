@@ -1,7 +1,5 @@
 package sample;
 
-import java.util.List;
-
 /**
  * Created by aleksander-zn on 2016-01-09.
  */
@@ -33,8 +31,8 @@ public class Player {
     public void createAnimal(int colour) {
         final StaticEntity leftWall = StaticEntity.list_of_staticEntity.get(0);
         final StaticEntity rightWall = StaticEntity.list_of_staticEntity.get(1);
-        final StaticEntity net = StaticEntity.list_of_staticEntity.get(3);
-        final StaticEntity ground = StaticEntity.list_of_staticEntity.get(4);
+        final StaticEntity net = StaticEntity.list_of_staticEntity.get(4);
+        final StaticEntity ground = StaticEntity.list_of_staticEntity.get(3);
 
         double leftLimit;
         double rightLimit;
@@ -50,19 +48,13 @@ public class Player {
         double px = (leftLimit + rightLimit) / 2;
         double py = ground.point.pos_y;
 
-        // placeholders for real constants; they may be migrated to another class, don't get used to 'em
-        final double dx = 0;
-        final double rad = 0;
-        final double vel = 0;
-
         // colour
         this.colour = colour;
-        if (colour == 0)  animal = new Animal(side, "Pictures/lion_brown.png");
-        else if(colour == 1) animal = new Animal(side, "Pictures/lion_white.png");
+        animal = new Animal(colour, px, py, leftLimit, rightLimit);
 
     }
 
-    public void moveDecision(int direction) {
-        animal.move(direction);
+    public void moveDecision(int direction, double deltaTime) {
+        animal.move(direction, deltaTime);
     }
 }
