@@ -55,13 +55,13 @@ public class GamePlay extends SceneWrapper {
     @Override
     public void handleEvents() {
         this.setOnKeyPressed(keyEvent -> {
-            if(keyEvent.getCode() == KeyCode.LEFT) listOfPlayers[Player.RIGHT_SIDE].moveDecision(4);
-            if(keyEvent.getCode() == KeyCode.RIGHT) listOfPlayers[Player.RIGHT_SIDE].moveDecision(6);
-            if(keyEvent.getCode() == KeyCode.UP) listOfPlayers[Player.RIGHT_SIDE].moveDecision(8);
-            if(keyEvent.getCode() == KeyCode.A) listOfPlayers[Player.LEFT_SIDE].moveDecision(4);
-            if(keyEvent.getCode() == KeyCode.D) listOfPlayers[Player.LEFT_SIDE].moveDecision(6);
-            if(keyEvent.getCode() == KeyCode.W) listOfPlayers[Player.LEFT_SIDE].moveDecision(8);
-            if(keyEvent.getCode() == KeyCode.ESCAPE) this.exit(new Menu(new Group(), this.game, 600, 400));
+            if(keyEvent.getCode() == KeyCode.LEFT) listOfPlayers[Player.RIGHT_SIDE].moveDecision(listOfPlayers[Player.RIGHT_SIDE].animal.LEFT);
+            else if(keyEvent.getCode() == KeyCode.RIGHT) listOfPlayers[Player.RIGHT_SIDE].moveDecision(listOfPlayers[Player.RIGHT_SIDE].animal.RIGHT);
+            else if(keyEvent.getCode() == KeyCode.UP) listOfPlayers[Player.RIGHT_SIDE].moveDecision(listOfPlayers[Player.RIGHT_SIDE].animal.UP);
+            else if(keyEvent.getCode() == KeyCode.A) listOfPlayers[Player.LEFT_SIDE].moveDecision(listOfPlayers[Player.LEFT_SIDE].animal.LEFT);
+            else if(keyEvent.getCode() == KeyCode.D) listOfPlayers[Player.LEFT_SIDE].moveDecision(listOfPlayers[Player.LEFT_SIDE].animal.RIGHT);
+            else if(keyEvent.getCode() == KeyCode.W) listOfPlayers[Player.LEFT_SIDE].moveDecision(listOfPlayers[Player.LEFT_SIDE].animal.UP);
+            else if(keyEvent.getCode() == KeyCode.ESCAPE) this.exit(new Menu(new Group(), this.game, 600, 400));
         });
     }
 
