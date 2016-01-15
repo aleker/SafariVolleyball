@@ -54,10 +54,12 @@ public class Player {
         final double dx = 0;
         final double rad = 0;
         final double vel = 0;
-        animal = new Animal(side, "Pictures/lion_brown.png");
 
+        // colour
         this.colour = colour;
-        // and what do do with the colour?
+        if (colour == 0)  animal = new Animal(side, "Pictures/lion_brown.png");
+        else if(colour == 1) animal = new Animal(side, "Pictures/lion_white.png");
+
     }
 
     public void moveDecision(int direction) {

@@ -49,7 +49,7 @@ public class GamePlay extends SceneWrapper {
         b_result.setOnAction(e -> this.exit(new Result(new Group(), this.game, 800, 600)));
         this.addEntity(b_result);
         //end temporary button
-
+        playing = true;
     }
 
     @Override
@@ -104,13 +104,8 @@ public class GamePlay extends SceneWrapper {
         listOfPlayers[0] = PlayerList.newPlayer(Left_index, Player.LEFT_SIDE);
         listOfPlayers[1] = PlayerList.newPlayer(Right_index, Player.RIGHT_SIDE);
 
-        // colour = 0 -> it will be changed so the value will return appropriate colour of animal
-        // createAnimal not working!
         listOfPlayers[0].createAnimal(0);
         listOfPlayers[1].createAnimal(1);
-
-        //listOfPlayers[0].animal.startPos();
-        //listOfPlayers[1].animal.startPos();
     }
 
     public void setNewServe(int player_number) {
