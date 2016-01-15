@@ -208,5 +208,22 @@ public class DynamicEntity extends StaticEntity {
 
 
     }
+    public int detectDynamicCollision(Animal animal) {    // returns 1 if collision, else returns 0
+
+        if(GamePlay.stop()) return 0;   // case when the ball touches the ground and animal tries to push ball under ground.
+        setCenterPoint();
+        // solve distance
+        double dx = center_point.pos_x - animal.getCenter().pos_x;
+        double dy = center_point.pos_y - animal.getCenter().pos_y;
+        double distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance <= radius + animal.getRadius()) { // if collision then count new vel_x and vel_y
+            // assuming that mass of animal is much greater than mass of ball
+            vel_x = gameConstant.C_SPEED * (dx / distance);
+            vel_y = gameConstant.C_SPEED * (dy / distance);
+            return 1;
+        }
+        return 0;
+    }
 }
 
