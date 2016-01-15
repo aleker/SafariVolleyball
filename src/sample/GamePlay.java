@@ -53,7 +53,7 @@ public class GamePlay extends SceneWrapper {
         b_result.setOnAction(e -> this.exit(new Result(new Group(), this.game, 800, 600)));
         this.addEntity(b_result);
         //end temporary button
-
+        playing = true;
     }
 
     @Override
