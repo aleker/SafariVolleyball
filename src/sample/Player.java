@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Player {
     // all instance members of reference type are initialized to null
-    private Animal animal;
+    public Animal animal;
 
     // British English spelling just to annoy programmers
     private int colour;
@@ -54,7 +54,7 @@ public class Player {
         final double dx = 0;
         final double rad = 0;
         final double vel = 0;
-        animal = new Animal(px, py, dx, rad, vel, leftLimit, rightLimit);
+        animal = new Animal(side, "Pictures/lion_brown.png");
 
         this.colour = colour;
         // and what do do with the colour?

@@ -20,28 +20,35 @@ public class GamePlay extends SceneWrapper {
     private StaticEntity ground;
     private StaticEntity net;
     private GraphicsContext gc;
+    public int Left_index = 1;
+    public int Right_index = 1;
 
-    public GamePlay(Group root, Game game, int windowWidth, int windowHeight) {
+
+    public GamePlay(Group root, Game game, int windowWidth, int windowHeight, int Left_index, int Right_index) {
         super(root, game, windowWidth, windowHeight);
+        this.Left_index = Left_index;
+        this.Right_index = Right_index;
+        initialize();
+        handleEvents();
     }
 
     @Override
     public void initialize() {
 
         points = new int[2];
-        this.background = new Image("Pictures/background.png");
-        Canvas canvas = new Canvas(800,600);
+        this.addBackground(new Image("file:src/Pictures/background.png"));
+        Canvas canvas = new Canvas(800, 600);
         gc = canvas.getGraphicsContext2D();
         group.getChildren().add(canvas);
         createEntities();
+        // entities should be created before players
+        createPlayers();
 
-        // temporary
+        // temporary button
         Button b_result = new Button("Go to Result_scene");
         b_result.setOnAction(e -> this.exit(new Result(new Group(), this.game, 800, 600)));
-        b_result.setLayoutX(200);
-        b_result.setLayoutY(200);
         this.addEntity(b_result);
-        //end temporary
+        //end temporary button
 
     }
 
@@ -62,34 +69,54 @@ public class GamePlay extends SceneWrapper {
     public void update(double deltaTime) {
         ball.detectStaticCollison();
         ball.calculateNewPosition();
-        gc.clearRect(0, 0, 800,600);
+        gc.clearRect(0, 0, 800, 600);
         ball.setCenterPoint();
         ball.detectStaticCollison();
         ball.calculateNewPosition();
-        gc.drawImage( background, 0, 0 );
-        gc.drawImage(net.image,net.point.pos_x,net.point.pos_y);
-        gc.drawImage(ball.image,ball.point.pos_x,ball.point.pos_y);
-
+        listOfPlayers[0].animal.calculateNewPosition();
+        listOfPlayers[1].animal.calculateNewPosition();
+        listOfPlayers[0].animal.detectStaticCollison();
+        listOfPlayers[1].animal.detectStaticCollison();
+        ball.detectDynamicCollision(listOfPlayers[0].animal);
+        ball.detectDynamicCollision(listOfPlayers[1].animal);
+        gc.drawImage(background, 0, 0, this.width, this.height);
+        gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
+        gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
+        gc.drawImage(listOfPlayers[0].animal.image, listOfPlayers[0].animal.point.pos_x, listOfPlayers[0].animal.point.pos_y);
+        gc.drawImage(listOfPlayers[1].animal.image, listOfPlayers[1].animal.point.pos_x, listOfPlayers[1].animal.point.pos_y);
     }
 
     public static boolean stop() {
         return !playing;
     }
+
     public void createEntities() {
-        leftwall = new StaticEntity(0,0);
-        rightwall = new StaticEntity(800,0);
-        ceiling = new StaticEntity(0,0);
-        ground = new StaticEntity(0,600);
-        net = new StaticEntity("Pictures/net.png",400,231);
+        leftwall = new StaticEntity(0, 0);
+        rightwall = new StaticEntity(800, 0);
+        ceiling = new StaticEntity(0, 0);
+        ground = new StaticEntity(0, 600);
+        net = new StaticEntity("Pictures/net.png", 400, 231);
         ball = new DynamicEntity("Pictures/ball.png");
     }
 
-    public void createPlayer() {}
-    public void setNewServe(int player_number) {
-//        player_list[0].animal.startPosition();
-//        player_list[0].animal.startPosition();
-//        Point pointForBall = new Point(player_list[player_number].animal.px, player_list[player_number].animal.py - 40);
-//        ball.p
+    public void createPlayers() {
+        listOfPlayers = new Player[2];
+        listOfPlayers[0] = PlayerList.newPlayer(Left_index, Player.LEFT_SIDE);
+        listOfPlayers[1] = PlayerList.newPlayer(Right_index, Player.RIGHT_SIDE);
 
+        // colour = 0 -> it will be changed so the value will return appropriate colour of animal
+        // createAnimal not working!
+        listOfPlayers[0].createAnimal(0);
+        listOfPlayers[1].createAnimal(1);
+
+        //listOfPlayers[0].animal.startPos();
+        //listOfPlayers[1].animal.startPos();
     }
+
+    public void setNewServe(int player_number) {
+//        listOfPlayers[0].animal.startPos();
+//        listOfPlayers[1].animal.startPos();
+        ball.setNewSetPosition(player_number);
+    }
+
 }

@@ -49,6 +49,11 @@ public class StaticEntity {
     public void setCenterPoint(){
         center_point = new Point( point.pos_x + this.width/2,point.pos_y + this.height/2);
     }
+
+    public void updateCenterPoint(){
+        center_point.pos_x = point.pos_x + width/2;
+        center_point.pos_y = point.pos_y + height/2;
+    }
     public void setWidth(){
         this.width = this.image.getWidth();
     }
