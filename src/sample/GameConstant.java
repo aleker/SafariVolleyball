@@ -17,10 +17,13 @@ public class GameConstant {
     public static final double ANIMAL_SPEED = 10.0;
     public static final double ANIMAL_RADIUS_PER_PIXEL = 50.0/166.0;
     public static final double ANIMAL_HEAD_CENTER_Y_PER_PIXEL = 85.0/171.0;
-    public static final double ANIMAL_JUMP_SPEED = 10.0;
 
     public static final int ANIMAL_JUMP_HEIGHT = 200;
-    public static final double ANIMAL_GRAVITY = C_GRAVITY; //200;
+    public static final double ANIMAL_GRAVITY = C_GRAVITY;
+    public static final double ANIMAL_JUMP_SPEED = Math.sqrt(2.0 * ANIMAL_JUMP_HEIGHT * ANIMAL_GRAVITY);
+    public static final double ANIMAL_MAX_HORIZONTAL_SPEED = 300;
+    public static final double ANIMAL_HORIZONTAL_ACCELERATION = 1000;
+    public static final double ANIMAL_HORIZONTAL_DECELERATION = 1000;
     public static final double ANIMAL_SCALE = 0.85;
 
     public static final double BALL_SCALE = 0.85;
