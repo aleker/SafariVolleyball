@@ -4,16 +4,11 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.application.*;
 import javafx.scene.image.Image;
-
-import java.lang.Exception;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.*;
-import javafx.scene.layout.*;
 
 public class GamePlay extends SceneWrapper {
 
@@ -144,9 +139,6 @@ public class GamePlay extends SceneWrapper {
         gc.drawImage(background, 0, 0, this.width, this.height);
         gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
         gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
-
-//        listOfPlayers[0].moveDecision(0, deltaTime);
-//        listOfPlayers[1].moveDecision(0, deltaTime);
 
         whichMoveDecision();
 
