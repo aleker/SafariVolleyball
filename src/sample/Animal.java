@@ -30,6 +30,8 @@ public class Animal extends DynamicEntity {
     public static final int DIR_RIGHT = 6;
     public static final int DIR_UP = 8;
 
+    private static final double jump_speed = Math.sqrt(2.0 * GameConstant.ANIMAL_JUMP_HEIGHT * GameConstant.ANIMAL_GRAVITY);
+
     public Animal(int colour, double px, double py, double leftLimit, double rightLimit) {
         super(colour2imagePath[colour]);
         this.px = px - width / 2;
@@ -68,8 +70,8 @@ public class Animal extends DynamicEntity {
                     else acc_x = 0;
                     break;
                 case DIR_UP:
-                    acc_y = +200;
-                    vel_y = -300;
+                    acc_y = GameConstant.ANIMAL_GRAVITY;
+                    vel_y = -jump_speed;
                     break;
             }
         }

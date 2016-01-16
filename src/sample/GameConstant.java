@@ -18,6 +18,8 @@ public class GameConstant {
     public static final double ANIMAL_HEAD_CENTER_Y = 85.0;
     public static final double ANIMAL_JUMP_SPEED = 10.0;
 
+    public static final int ANIMAL_JUMP_HEIGHT = 200;
+    public static final double ANIMAL_GRAVITY = 200;
 
     public static final int MAX_POINTS = 15;
 }
