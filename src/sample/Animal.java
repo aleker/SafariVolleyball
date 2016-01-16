@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 public class Animal extends DynamicEntity {
 //    static double floorLevel = list_of_staticEntity.get(3).point.pos_y;
     public Point center;
-    private double radius = GameConstant.ANIMAL_RADIUS;
+    private double radius;
     private double startVel = GameConstant.ANIMAL_JUMP_SPEED;
     private double deltaX = GameConstant.ANIMAL_SPEED;
 //    private double leftLimit;
@@ -16,6 +16,7 @@ public class Animal extends DynamicEntity {
     public static final int LEFT = 0;
     public static final int RIGHT = 1;
     public static final int UP = 8;
+    private double animalHeadCenter;
 
     /**************************************************************************/
     private double acc_y;
@@ -33,13 +34,15 @@ public class Animal extends DynamicEntity {
     private static final double jump_speed = Math.sqrt(2.0 * GameConstant.ANIMAL_JUMP_HEIGHT * GameConstant.ANIMAL_GRAVITY);
 
     public Animal(int colour, double px, double py, double leftLimit, double rightLimit) {
-        super(colour2imagePath[colour]);
+        super(colour2imagePath[colour], GameConstant.ANIMAL_SCALE);
         this.px = px - width / 2;
         this.py = py - height;
         this.leftLimit = leftLimit;
         this.rightLimit = rightLimit - width;
         getOnPosition();
         center = new Point(0, 0);
+        animalHeadCenter = GameConstant.ANIMAL_HEAD_CENTER_Y_PER_PIXEL * height;
+        radius = GameConstant.ANIMAL_RADIUS_PER_PIXEL * width;
     }
 
     public void getOnPosition() {
@@ -111,7 +114,7 @@ public class Animal extends DynamicEntity {
         center.pos_x = leftLimit + (rightLimit - leftLimit) / 2;
         point.pos_x = center.pos_x - image.getWidth()/2;
         point.pos_y = floorLevel - image.getHeight();
-        center.pos_y = point.pos_y + GameConstant.ANIMAL_HEAD_CENTER_Y;
+        center.pos_y = point.pos_y + GameConstant.ANIMAL_HEAD_CENTER_Y_PER_PIXEL * height;
     }
 
 //    public void startPos() {    // set starting position of animal
@@ -148,7 +151,7 @@ public class Animal extends DynamicEntity {
     public Point getCenter() { return center; }
     public void countCenter() {
         center.pos_x = point.pos_x + image.getWidth()/2;
-        center.pos_y = point.pos_y + GameConstant.ANIMAL_HEAD_CENTER_Y;
+        center.pos_y = point.pos_y + animalHeadCenter;
     }
     private void detectStaticCollision() {
         if(point.pos_y + image.getHeight() > floorLevel) {

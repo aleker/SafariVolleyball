@@ -14,12 +14,13 @@ public class GameConstant {
     public static final int LEFT_WALL_X = 0;
     public static final int RIGHT_WALL_X = 800;
     public static final double ANIMAL_SPEED = 10.0;
-    public static final int ANIMAL_RADIUS = 50;
-    public static final double ANIMAL_HEAD_CENTER_Y = 85.0;
+    public static final double ANIMAL_RADIUS_PER_PIXEL = 50.0/166.0;
+    public static final double ANIMAL_HEAD_CENTER_Y_PER_PIXEL = 85.0/171.0;
     public static final double ANIMAL_JUMP_SPEED = 10.0;
 
     public static final int ANIMAL_JUMP_HEIGHT = 200;
     public static final double ANIMAL_GRAVITY = 200;
+    public static final double ANIMAL_SCALE = 0.85;
 
     public static final int MAX_POINTS = 15;
 }
