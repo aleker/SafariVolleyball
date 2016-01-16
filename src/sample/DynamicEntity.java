@@ -153,7 +153,9 @@ public class DynamicEntity extends StaticEntity {
             double dx = this.center_point.pos_x - net_top_center.pos_x;
             double dy = this.center_point.pos_y - net_top_center.pos_y;
             double d = distanceBetweenTwoPoints(this.center_point, net_top_center);
-            double speed = Math.sqrt(vel_x * vel_x + vel_y * vel_y);
+            //double speed = Math.sqrt(vel_x * vel_x + vel_y * vel_y);
+            double speed = Math.sqrt(GameConstant.C_SPEED * GameConstant.C_SPEED + 2 * GameConstant.C_GRAVITY *
+                    (point.pos_y - GameConstant.C_START_POS_Y));
             vel_x = speed * (dx / d);
             double new_vel_y = speed * (dy / d);
          //   if (this.vel_y > 0 && new_vel_y < 0) {
@@ -249,7 +251,9 @@ public class DynamicEntity extends StaticEntity {
         if (distance <= radius + animal.getRadius()) { // if collision then count new vel_x and vel_y
             // assuming that mass of animal is much greater than mass of ball
             if(last_collision !=Intersect_enum.ANIMAL) {
-                double speed = Math.sqrt(vel_x * vel_x + vel_y * vel_y);
+                //double speed = Math.sqrt(vel_x * vel_x + vel_y * vel_y);
+                double speed = Math.sqrt(GameConstant.C_SPEED * GameConstant.C_SPEED + 2 * GameConstant.C_GRAVITY *
+                        (point.pos_y - GameConstant.C_START_POS_Y));
                 vel_x = speed * (dx / distance);
                 vel_y = speed * (dy / distance);
                 last_collision = Intersect_enum.ANIMAL;

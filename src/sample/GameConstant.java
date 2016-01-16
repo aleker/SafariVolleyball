@@ -4,7 +4,7 @@ package sample;
  * Created by Izabela on 08.01.2016.
  */
 public class GameConstant {
-    public static final double C_SPEED = 180.0;
+    public static final double C_SPEED = 0;
     private static final double C_ANGLE = 90.0 * Math.PI / 180.0;
     public static final double C_VEL_X = C_SPEED * Math.cos(C_ANGLE);
     public static final double C_VEL_Y = C_SPEED * Math.sin(C_ANGLE);
