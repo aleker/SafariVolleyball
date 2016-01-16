@@ -94,6 +94,7 @@ public class DynamicEntity extends StaticEntity {
     }
 
     public void detectStaticCollison( ) {
+        updateCenterPoint();
         this.intersect();
         Intersect_enum intersect_enum = Intersect_enum.LEFT_WALL;
         if (Intersect_enum.LEFT_WALL.intersect){
@@ -123,8 +124,7 @@ public class DynamicEntity extends StaticEntity {
             intersect_enum.setStatus(false);
             collisionWithNet();
         }
-
-
+        calculateNewPosition();
     }
 
     private void collisionWithLeftWall(){
@@ -252,6 +252,7 @@ public class DynamicEntity extends StaticEntity {
                 vel_y = -GameConstant.C_SPEED * (dy / distance);
                 last_collision = Intersect_enum.ANIMAL;
             }
+            calculateNewPosition();
             return 1;
         }
         return 0;

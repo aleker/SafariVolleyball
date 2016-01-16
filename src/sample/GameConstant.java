@@ -5,8 +5,8 @@ package sample;
  */
 public class GameConstant {
     public static final double C_VEL_X = 2;
-    public static final double C_VEL_Y = 5;
-    public static final double C_SPEED = - 5;
+    public static final double C_VEL_Y = 7;
+    public static final double C_SPEED = - 7;
     public static final double C_GRAVITY = 0.03;
     public static final double C_START_POS_X = 400;
     public static final double C_START_POS_Y = 0;

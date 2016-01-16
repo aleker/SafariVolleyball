@@ -63,13 +63,9 @@ public class GamePlay extends SceneWrapper {
     @Override
     public void update(double deltaTime) {
         ball.detectStaticCollison();
-        ball.calculateNewPosition();
-        gc.clearRect(0, 0, 800, 600);
-        ball.setCenterPoint();
-        ball.detectStaticCollison();
-        ball.calculateNewPosition();
         ball.detectDynamicCollision(listOfPlayers[0].animal);
         ball.detectDynamicCollision(listOfPlayers[1].animal);
+        gc.clearRect(0, 0, 800, 600);
         gc.drawImage(background, 0, 0, this.width, this.height);
         gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
         gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
