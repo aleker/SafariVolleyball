@@ -21,12 +21,9 @@ public class GamePlay extends SceneWrapper {
     public int Left_index = 1;
     public int Right_index = 1;
 
-    // temporary
-    private double counter = 0;
-    private int rightDir = Animal.DIR_RIGHT;
-    // temporary
-
     double time;
+
+    private int move[][];
 
     public GamePlay(Group root, Game game, int windowWidth, int windowHeight, int Left_index, int Right_index) {
         super(root, game, windowWidth, windowHeight);
@@ -40,6 +37,8 @@ public class GamePlay extends SceneWrapper {
     public void initialize() {
 
         points = new int[2];
+
+        move = new int[2][1];
 
         this.addBackground(new Image("file:src/Pictures/background.png"));
         Canvas canvas = new Canvas(800, 600);
@@ -62,25 +61,47 @@ public class GamePlay extends SceneWrapper {
         this.setOnKeyPressed(keyEvent -> {
             switch (keyEvent.getCode()) {
                 case LEFT:
-                    listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.LEFT, time);
+                    move[Player.RIGHT_SIDE][0] = Animal.DIR_LEFT;
                     break;
                 case RIGHT:
-                    listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.RIGHT, time);
+                    move[Player.RIGHT_SIDE][0] = Animal.DIR_RIGHT;
                     break;
                 case UP:
-                    listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.UP, time);
+                    move[Player.RIGHT_SIDE][0] = Animal.DIR_UP;
                     break;
                 case A:
-                    listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.LEFT, time);
+                    move[Player.LEFT_SIDE][0] = Animal.DIR_LEFT;
                     break;
                 case D:
-                    listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.RIGHT, time);
+                    move[Player.LEFT_SIDE][0] = Animal.DIR_RIGHT;
                     break;
                 case W:
-                    listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.UP, time);
+                    move[Player.LEFT_SIDE][0] = Animal.DIR_UP;
                     break;
                 case ESCAPE:
                     this.exit(new Menu(new Group(), this.game, 600, 400));
+                    break;
+            }
+        });
+        this.setOnKeyReleased(keyEvent -> {
+            switch (keyEvent.getCode()) {
+                case LEFT:
+                    move[Player.RIGHT_SIDE][0] = -1;
+                    break;
+                case RIGHT:
+                    move[Player.RIGHT_SIDE][0] = -1;
+                    break;
+                case UP:
+                    move[Player.RIGHT_SIDE][0] = -1;
+                    break;
+                case A:
+                    move[Player.LEFT_SIDE][0] = -1;
+                    break;
+                case D:
+                    move[Player.LEFT_SIDE][0] = -1;
+                    break;
+                case W:
+                    move[Player.LEFT_SIDE][0] = -1;
                     break;
             }
         });
@@ -95,19 +116,27 @@ public class GamePlay extends SceneWrapper {
         ball.setCenterPoint();
         ball.detectStaticCollison();
         ball.calculateNewPosition();
-        //listOfPlayers[0].animal.calculateNewPosition();
-        //listOfPlayers[1].animal.calculateNewPosition();
-        //listOfPlayers[0].animal.detectStaticCollison();
-        //listOfPlayers[1].animal.detectStaticCollison();
+
+//        listOfPlayers[0].animal.calculateNewPosition();
+//        listOfPlayers[1].animal.calculateNewPosition();
+//        listOfPlayers[0].animal.detectStaticCollison();
+//        listOfPlayers[1].animal.detectStaticCollison();
+
         listOfPlayers[0].animal.countCenter();
         listOfPlayers[1].animal.countCenter();
+
         ball.detectDynamicCollision(listOfPlayers[0].animal);
         ball.detectDynamicCollision(listOfPlayers[1].animal);
+
         gc.drawImage(background, 0, 0, this.width, this.height);
         gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
         gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
-        listOfPlayers[0].moveDecision(0, deltaTime);
-        listOfPlayers[1].moveDecision(0, deltaTime);
+
+//        listOfPlayers[0].moveDecision(0, deltaTime);
+//        listOfPlayers[1].moveDecision(0, deltaTime);
+
+        whichMoveDecision();
+
         gc.drawImage(listOfPlayers[0].animal.image, listOfPlayers[0].animal.point.pos_x, listOfPlayers[0].animal.point.pos_y);
         gc.drawImage(listOfPlayers[1].animal.image, listOfPlayers[1].animal.point.pos_x, listOfPlayers[1].animal.point.pos_y);
     }
@@ -139,4 +168,29 @@ public class GamePlay extends SceneWrapper {
 //        listOfPlayers[1].animal.startPos();
         ball.setNewSetPosition(player_number);
     }
+
+    private void whichMoveDecision() {
+        if(move[Player.RIGHT_SIDE][0] == Animal.DIR_LEFT)
+            listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.DIR_LEFT, this.time);
+
+        else if(move[Player.RIGHT_SIDE][0] == Animal.DIR_RIGHT)
+            listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.DIR_RIGHT, this.time);
+
+        else if(move[Player.RIGHT_SIDE][0] == Animal.DIR_UP)
+            listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.DIR_UP, this.time);
+
+        else listOfPlayers[Player.RIGHT_SIDE].moveDecision(0, this.time);
+
+        if(move[Player.LEFT_SIDE][0] == Animal.DIR_LEFT)
+            listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.DIR_LEFT, this.time);
+
+        else if(move[Player.LEFT_SIDE][0] == Animal.DIR_RIGHT)
+            listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.DIR_RIGHT, this.time);
+
+        else if(move[Player.LEFT_SIDE][0] == Animal.DIR_UP)
+            listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.DIR_UP, this.time);
+
+        else listOfPlayers[Player.LEFT_SIDE].moveDecision(0, this.time);
+    }
+
 }
