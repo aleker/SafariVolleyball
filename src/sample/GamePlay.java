@@ -7,8 +7,11 @@ import javafx.scene.control.Button;
 import javafx.application.*;
 import javafx.scene.image.Image;
 
-import java.awt.*;
 import java.lang.Exception;
+
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.*;
 import javafx.scene.layout.*;
 
@@ -26,6 +29,8 @@ public class GamePlay extends SceneWrapper {
     private GraphicsContext gc;
     public int Left_index = 1;
     public int Right_index = 1;
+    private int noOfConsecutiveContacts = 0;
+    private int sideOfLastContact = Player.LEFT_SIDE;
 
     public GamePlay(Group root, Game game, int windowWidth, int windowHeight, int Left_index, int Right_index) {
         super(root, game, windowWidth, windowHeight);
@@ -62,14 +67,30 @@ public class GamePlay extends SceneWrapper {
 
     @Override
     public void update(double deltaTime) {
+        int sideOfContact = Player.LEFT_SIDE;
+        boolean contact = false;
         ball.detectStaticCollison();
         ball.calculateNewPosition();
         gc.clearRect(0, 0, 800, 600);
         ball.setCenterPoint();
         ball.detectStaticCollison();
         ball.calculateNewPosition();
-        ball.detectDynamicCollision(listOfPlayers[0].animal);
-        ball.detectDynamicCollision(listOfPlayers[1].animal);
+
+        for (int i = Player.LEFT_SIDE; i <= Player.RIGHT_SIDE; i++) {
+            if (ball.detectDynamicCollision(listOfPlayers[i].animal) != 0) {
+                contact = true;
+                sideOfContact = i;
+            }
+        }
+        if (contact) {
+            if (sideOfContact == sideOfLastContact) {
+                noOfConsecutiveContacts++;
+            } else {
+                noOfConsecutiveContacts = 1;
+            }
+            sideOfLastContact = sideOfContact;
+        }
+
         gc.drawImage(background, 0, 0, this.width, this.height);
         gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
         gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
@@ -77,6 +98,10 @@ public class GamePlay extends SceneWrapper {
         listOfPlayers[1].moveDecision(0, deltaTime);
         gc.drawImage(listOfPlayers[0].animal.image, listOfPlayers[0].animal.point.pos_x, listOfPlayers[0].animal.point.pos_y);
         gc.drawImage(listOfPlayers[1].animal.image, listOfPlayers[1].animal.point.pos_x, listOfPlayers[1].animal.point.pos_y);
+
+        gc.setFont(Font.font("Verdana", FontWeight.NORMAL, 18));
+        gc.setFill(Color.BLACK);
+        gc.fillText(new Integer(noOfConsecutiveContacts).toString(), 200, 20);
     }
 
     public static boolean stop() {
