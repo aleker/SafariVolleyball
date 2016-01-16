@@ -20,6 +20,16 @@ public class StaticEntity {
         setCenterPoint();
     }
 
+    public StaticEntity(String imagepath, double pos_x, double pos_y, double scale) {
+        this.point = new Point(pos_x, pos_y);
+        this.path = imagepath;
+        loadScaledImage(scale);
+        list_of_staticEntity.add(this);
+        setWidth();
+        setHeight();
+        setCenterPoint();
+    }
+
     StaticEntity(String imagepath, double pos_x, double pos_y){//w scenie gameplay wywolywac konstruktory w kolejnosci left_wall,right_wall,celling,ground,net
         this.point = new Point(pos_x,pos_y);
         this.path = imagepath;
@@ -70,6 +80,11 @@ public class StaticEntity {
     public void loadScaledImage(double width, double height) {
         // image scaling is done only once -- when it is being loaded so we can use smooth algorithm
         image = new Image(path, width, height, false, true);
+    }
+
+    public void loadScaledImage(double scale) {
+        final Image originalImage = new Image(path);
+        image = new Image(path, originalImage.getWidth() * scale, originalImage.getHeight() * scale, true, true);
     }
 
     public Point getNetTopCenter(){

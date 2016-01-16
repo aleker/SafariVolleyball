@@ -17,6 +17,19 @@ public class DynamicEntity extends StaticEntity {
         setRadius();
     }
 
+    public DynamicEntity(String imagepath, double scale) {
+        this.point = new Point(GameConstant.C_START_POS_X,GameConstant.C_START_POS_Y);
+        this.path = imagepath;
+        vel_x = GameConstant.C_VEL_X;
+        vel_y = GameConstant.C_VEL_Y;
+        loadScaledImage(scale);
+        setWidth();
+        setHeight();
+        setCenterPoint();
+        setRadius();
+    }
+
+
     DynamicEntity(String imagepath) {
         this.point = new Point(GameConstant.C_START_POS_X,GameConstant.C_START_POS_Y);
         this.path = imagepath;
