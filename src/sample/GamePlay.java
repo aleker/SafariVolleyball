@@ -27,6 +27,11 @@ public class GamePlay extends SceneWrapper {
     public int Left_index = 1;
     public int Right_index = 1;
 
+    // temporary
+    private double counter = 0;
+    private int rightDir = Animal.DIR_RIGHT;
+    // temporary
+
 
     public GamePlay(Group root, Game game, int windowWidth, int windowHeight, int Left_index, int Right_index) {
         super(root, game, windowWidth, windowHeight);
@@ -69,15 +74,25 @@ public class GamePlay extends SceneWrapper {
         ball.setCenterPoint();
         ball.detectStaticCollison();
         ball.calculateNewPosition();
-        listOfPlayers[0].animal.calculateNewPosition();
-        listOfPlayers[1].animal.calculateNewPosition();
-        listOfPlayers[0].animal.detectStaticCollison();
-        listOfPlayers[1].animal.detectStaticCollison();
+        //listOfPlayers[0].animal.calculateNewPosition();
+        //listOfPlayers[1].animal.calculateNewPosition();
+        //listOfPlayers[0].animal.detectStaticCollison();
+        //listOfPlayers[1].animal.detectStaticCollison();
+        listOfPlayers[0].animal.countCenter();
+        listOfPlayers[1].animal.countCenter();
         ball.detectDynamicCollision(listOfPlayers[0].animal);
         ball.detectDynamicCollision(listOfPlayers[1].animal);
         gc.drawImage(background, 0, 0, this.width, this.height);
         gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
         gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
+        listOfPlayers[0].moveDecision(Animal.DIR_UP, deltaTime);
+        counter += deltaTime;
+        if (counter > 1.5) {
+            rightDir = 6 - (rightDir - 4);
+            System.out.println(rightDir);
+            counter -= 3;
+        }
+        listOfPlayers[1].moveDecision(rightDir, deltaTime);
         gc.drawImage(listOfPlayers[0].animal.image, listOfPlayers[0].animal.point.pos_x, listOfPlayers[0].animal.point.pos_y);
         gc.drawImage(listOfPlayers[1].animal.image, listOfPlayers[1].animal.point.pos_x, listOfPlayers[1].animal.point.pos_y);
     }
@@ -91,7 +106,7 @@ public class GamePlay extends SceneWrapper {
         rightwall = new StaticEntity(800, 0);
         ceiling = new StaticEntity(0, 0);
         ground = new StaticEntity(0, 600);
-        net = new StaticEntity("Pictures/net.png", 400, 231);
+        net = new StaticEntity("Pictures/net.png", 400 - 29 / 2, 231);
         ball = new DynamicEntity("Pictures/ball.png");
     }
 
