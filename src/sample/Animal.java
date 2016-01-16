@@ -25,7 +25,7 @@ public class Animal extends DynamicEntity {
     private double leftLimit;
     private double rightLimit;
     // is our character still in the air?
-    private boolean inTheAir;
+    public boolean inTheAir;
 
     public static final int DIR_LEFT = 4;
     public static final int DIR_RIGHT = 6;
