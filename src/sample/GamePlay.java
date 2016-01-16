@@ -68,12 +68,6 @@ public class GamePlay extends SceneWrapper {
         ball.setCenterPoint();
         ball.detectStaticCollison();
         ball.calculateNewPosition();
-        //listOfPlayers[0].animal.calculateNewPosition();
-        //listOfPlayers[1].animal.calculateNewPosition();
-        //listOfPlayers[0].animal.detectStaticCollison();
-        //listOfPlayers[1].animal.detectStaticCollison();
-        listOfPlayers[0].animal.countCenter();
-        listOfPlayers[1].animal.countCenter();
         ball.detectDynamicCollision(listOfPlayers[0].animal);
         ball.detectDynamicCollision(listOfPlayers[1].animal);
         gc.drawImage(background, 0, 0, this.width, this.height);

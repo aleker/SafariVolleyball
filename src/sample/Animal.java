@@ -39,10 +39,10 @@ public class Animal extends DynamicEntity {
         this.py = py - height;
         this.leftLimit = leftLimit;
         this.rightLimit = rightLimit - width;
-        getOnPosition();
         center = new Point(0, 0);
         animalHeadCenter = GameConstant.ANIMAL_HEAD_CENTER_Y_PER_PIXEL * height;
         radius = GameConstant.ANIMAL_RADIUS_PER_PIXEL * width;
+        getOnPosition();
     }
 
     public void getOnPosition() {
@@ -51,6 +51,7 @@ public class Animal extends DynamicEntity {
         vel_x = 0;
         vel_y = 0;
         acc_y = +10;
+        countCenter();
     }
 
     public void move(int direction, double deltaTime) {
@@ -92,6 +93,8 @@ public class Animal extends DynamicEntity {
         // update the position
         point.pos_x += vel_x * deltaTime;
         point.pos_y += vel_y * deltaTime;
+
+        countCenter();
     }
 
     /**************************************************************************/
@@ -149,7 +152,7 @@ public class Animal extends DynamicEntity {
 
     public double getRadius() { return radius; }
     public Point getCenter() { return center; }
-    public void countCenter() {
+    private void countCenter() {
         center.pos_x = point.pos_x + image.getWidth()/2;
         center.pos_y = point.pos_y + animalHeadCenter;
     }
