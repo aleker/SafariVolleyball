@@ -37,7 +37,7 @@ public class Animal extends DynamicEntity {
         this.px = px - width / 2;
         this.py = py - height;
         this.leftLimit = leftLimit;
-        this.rightLimit = rightLimit;
+        this.rightLimit = rightLimit - width;
         getOnPosition();
         center = new Point(0, 0);
     }
@@ -77,7 +77,7 @@ public class Animal extends DynamicEntity {
         }
 
         // check the limits
-        if ((vel_x < 0 && point.pos_x <= leftLimit) || (vel_x > 0 && (point.pos_x + width) >= rightLimit)) {
+        if ((vel_x < 0 && point.pos_x <= leftLimit) || (vel_x > 0 && point.pos_x >= rightLimit)) {
             acc_x = 0;
             vel_x = 0;
         }
