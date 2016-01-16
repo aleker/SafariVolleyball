@@ -8,7 +8,7 @@ public class GameConstant {
     private static final double C_ANGLE = 180.0 * Math.PI / 180.0;
     public static final double C_VEL_X = C_SPEED * Math.cos(C_ANGLE);
     public static final double C_VEL_Y = C_SPEED * Math.sin(C_ANGLE);
-    public static final double C_GRAVITY = 200;
+    public static final double C_GRAVITY = 600;
     public static final double C_START_POS_X = 400;
     public static final double C_START_POS_Y = 0;
 
