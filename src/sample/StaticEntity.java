@@ -59,7 +59,7 @@ public class StaticEntity {
 
     public Point getNetTopCenter(){
         Point net_top_center = new Point((list_of_staticEntity.get(4).width)/2 + list_of_staticEntity.get(4).point.pos_x,
-                list_of_staticEntity.get(4).point.pos_y -  (list_of_staticEntity.get(4).width)/2);
+                list_of_staticEntity.get(4).point.pos_y );
         return net_top_center;
     }
 
