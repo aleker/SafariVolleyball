@@ -121,7 +121,7 @@ public class GamePlay extends SceneWrapper {
         rightwall = new StaticEntity(800, 0);
         ceiling = new StaticEntity(0, 0);
         ground = new StaticEntity(0, 600);
-        net = new StaticEntity("Pictures/net.png", 400 - 29 / 2, 231);
+        net = new StaticEntity("Pictures/net.png", 400 - (29 / 2), 131);
         ball = new DynamicEntity("Pictures/ball.png");
     }
 

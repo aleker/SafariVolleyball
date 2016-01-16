@@ -6,21 +6,21 @@ package sample;
 public class DynamicEntity extends StaticEntity {
 
     DynamicEntity(String imagepath) {
-        this.gameConstant = new GameConstant();
-        this.point = new Point(gameConstant.C_START_POS_X,gameConstant.C_START_POS_Y);
+        this.point = new Point(GameConstant.C_START_POS_X,GameConstant.C_START_POS_Y);
         this.path = imagepath;
-        vel_x = gameConstant.C_VEL_X;
-        vel_y = gameConstant.C_VEL_Y;
+        vel_x = GameConstant.C_VEL_X;
+        vel_y = GameConstant.C_VEL_Y;
         loadImage();
         setWidth();
         setHeight();
         setCenterPoint();
+        setRadius();
     }
 
     public double  vel_x;
     public double vel_y;
-    public double radius = width/2;
-    public boolean change_direction = false;
+    public double radius;
+   // public boolean change_direction = false;
     public Point net_top_center = getNetTopCenter();
     public boolean top_net_collision = false;
     private Intersect_enum last_collision;
@@ -41,15 +41,18 @@ public class DynamicEntity extends StaticEntity {
         }
     };
 
+    private void setRadius(){
+        this.radius = width/2;
+    }
 
     public void calculateNewPosition(){
-        if (change_direction) {
-            change_direction = false;
-            vel_y = gameConstant.C_SPEED;
-        }
+      //  if (change_direction) {
+      //      change_direction = false;
+      //     vel_y = GameConstant.C_SPEED;
+      //  }
         this.point.pos_x +=vel_x;
         this.point.pos_y +=vel_y;
-        this.vel_y +=gameConstant.C_GRAVITY;
+        this.vel_y +=GameConstant.C_GRAVITY;
 
     }
 
@@ -113,9 +116,9 @@ public class DynamicEntity extends StaticEntity {
         // loose score, end game or sth
         //it's only TEST
         double new_vel_y = - vel_y;
-        if(this.vel_y > 0 && new_vel_y <0) {
-            this.change_direction = true;
-        }
+    //    if(this.vel_y > 0 && new_vel_y <0) {
+    //        this.change_direction = true;
+    //    }
         vel_y = new_vel_y;
         //END TEST
 
@@ -125,11 +128,11 @@ public class DynamicEntity extends StaticEntity {
             double dx = this.center_point.pos_x - net_top_center.pos_x;
             double dy = this.center_point.pos_y - net_top_center.pos_y;
             double d = distanceBetweenTwoPoints(this.center_point, net_top_center);
-            vel_x = -gameConstant.C_SPEED * (dx / d);
-            double new_vel_y = -gameConstant.C_SPEED * (dy / d);
-            if (this.vel_y > 0 && new_vel_y < 0) {
-                this.change_direction = true;
-            }
+            vel_x = -GameConstant.C_SPEED * (dx / d);
+            double new_vel_y = -GameConstant.C_SPEED * (dy / d);
+         //   if (this.vel_y > 0 && new_vel_y < 0) {
+         //       this.change_direction = true;
+         //   }
             vel_y = new_vel_y;
             top_net_collision = false;
         }
@@ -183,7 +186,8 @@ public class DynamicEntity extends StaticEntity {
 
 
         }
-        if (distanceBetweenTwoPoints(net_top_center,this.center_point)< this.radius + 15 + list_of_staticEntity.get(4).width/2  ){// collision with net
+        updateCenterPoint();
+        if (distanceBetweenTwoPoints(net_top_center,this.center_point)<= this.radius + (list_of_staticEntity.get(4).width)/2  ){// collision with net
             if(last_collision!=Intersect_enum.NET){
                 intersect_enum = Intersect_enum.NET;
                 intersect_enum.setStatus(true);
@@ -212,7 +216,7 @@ public class DynamicEntity extends StaticEntity {
     public int detectDynamicCollision(Animal animal) {    // returns 1 if collision, else returns 0
 
         if(GamePlay.stop()) return 0;   // case when the ball touches the ground and animal tries to push ball under ground.
-        setCenterPoint();
+        updateCenterPoint();
         // solve distance
         double dx = center_point.pos_x - animal.getCenter().pos_x;
         double dy = center_point.pos_y - animal.getCenter().pos_y;
@@ -221,8 +225,8 @@ public class DynamicEntity extends StaticEntity {
         if (distance <= radius + animal.getRadius()) { // if collision then count new vel_x and vel_y
             // assuming that mass of animal is much greater than mass of ball
             if(last_collision !=Intersect_enum.ANIMAL) {
-                vel_x = -gameConstant.C_SPEED * (dx / distance);
-                vel_y = -gameConstant.C_SPEED * (dy / distance);
+                vel_x = -GameConstant.C_SPEED * (dx / distance);
+                vel_y = -GameConstant.C_SPEED * (dy / distance);
                 last_collision = Intersect_enum.ANIMAL;
             }
             return 1;
