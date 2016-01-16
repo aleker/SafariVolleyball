@@ -70,14 +70,14 @@ public class DynamicEntity extends StaticEntity {
         this.radius = width/2;
     }
 
-    public void calculateNewPosition(){
+    public void calculateNewPosition(double deltaTime){
       //  if (change_direction) {
       //      change_direction = false;
       //     vel_y = GameConstant.C_SPEED;
       //  }
-        this.point.pos_x +=vel_x;
-        this.point.pos_y +=vel_y;
-        this.vel_y +=GameConstant.C_GRAVITY;
+        this.point.pos_x +=vel_x*deltaTime;
+        this.point.pos_y +=vel_y*deltaTime;
+        this.vel_y +=GameConstant.C_GRAVITY*deltaTime;
 
     }
 
@@ -124,7 +124,7 @@ public class DynamicEntity extends StaticEntity {
             intersect_enum.setStatus(false);
             collisionWithNet();
         }
-        calculateNewPosition();
+        //calculateNewPosition();
     }
 
     private void collisionWithLeftWall(){
@@ -153,8 +153,9 @@ public class DynamicEntity extends StaticEntity {
             double dx = this.center_point.pos_x - net_top_center.pos_x;
             double dy = this.center_point.pos_y - net_top_center.pos_y;
             double d = distanceBetweenTwoPoints(this.center_point, net_top_center);
-            vel_x = -GameConstant.C_SPEED * (dx / d);
-            double new_vel_y = -GameConstant.C_SPEED * (dy / d);
+            double speed = Math.sqrt(vel_x * vel_x + vel_y * vel_y);
+            vel_x = speed * (dx / d);
+            double new_vel_y = speed * (dy / d);
          //   if (this.vel_y > 0 && new_vel_y < 0) {
          //       this.change_direction = true;
          //   }
@@ -248,11 +249,12 @@ public class DynamicEntity extends StaticEntity {
         if (distance <= radius + animal.getRadius()) { // if collision then count new vel_x and vel_y
             // assuming that mass of animal is much greater than mass of ball
             if(last_collision !=Intersect_enum.ANIMAL) {
-                vel_x = -GameConstant.C_SPEED * (dx / distance);
-                vel_y = -GameConstant.C_SPEED * (dy / distance);
+                double speed = Math.sqrt(vel_x * vel_x + vel_y * vel_y);
+                vel_x = speed * (dx / distance);
+                vel_y = speed * (dy / distance);
                 last_collision = Intersect_enum.ANIMAL;
             }
-            calculateNewPosition();
+            //calculateNewPosition();
             return 1;
         }
         return 0;

@@ -135,6 +135,7 @@ public class GamePlay extends SceneWrapper {
             sideOfLastContact = sideOfContact;
         }
 
+        ball.calculateNewPosition(deltaTime);
         gc.clearRect(0, 0, 800, 600);
         gc.drawImage(background, 0, 0, this.width, this.height);
         gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
