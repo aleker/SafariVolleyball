@@ -5,6 +5,18 @@ package sample;
  */
 public class DynamicEntity extends StaticEntity {
 
+    public DynamicEntity(String imagepath, double width, double height) {
+        this.point = new Point(GameConstant.C_START_POS_X,GameConstant.C_START_POS_Y);
+        this.path = imagepath;
+        vel_x = GameConstant.C_VEL_X;
+        vel_y = GameConstant.C_VEL_Y;
+        loadScaledImage(width, height);
+        this.width = width;
+        this.height = height;
+        setCenterPoint();
+        setRadius();
+    }
+
     DynamicEntity(String imagepath) {
         this.point = new Point(GameConstant.C_START_POS_X,GameConstant.C_START_POS_Y);
         this.path = imagepath;
