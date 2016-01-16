@@ -6,11 +6,10 @@ package sample;
 public class DynamicEntity extends StaticEntity {
 
     DynamicEntity(String imagepath) {
-        this.gameConstant = new GameConstant();
-        this.point = new Point(gameConstant.C_START_POS_X,gameConstant.C_START_POS_Y);
+        this.point = new Point(GameConstant.C_START_POS_X,GameConstant.C_START_POS_Y);
         this.path = imagepath;
-        vel_x = gameConstant.C_VEL_X;
-        vel_y = gameConstant.C_VEL_Y;
+        vel_x = GameConstant.C_VEL_X;
+        vel_y = GameConstant.C_VEL_Y;
         loadImage();
         setWidth();
         setHeight();
@@ -49,11 +48,11 @@ public class DynamicEntity extends StaticEntity {
     public void calculateNewPosition(){
       //  if (change_direction) {
       //      change_direction = false;
-      //     vel_y = gameConstant.C_SPEED;
+      //     vel_y = GameConstant.C_SPEED;
       //  }
         this.point.pos_x +=vel_x;
         this.point.pos_y +=vel_y;
-        this.vel_y +=gameConstant.C_GRAVITY;
+        this.vel_y +=GameConstant.C_GRAVITY;
 
     }
 
@@ -129,8 +128,8 @@ public class DynamicEntity extends StaticEntity {
             double dx = this.center_point.pos_x - net_top_center.pos_x;
             double dy = this.center_point.pos_y - net_top_center.pos_y;
             double d = distanceBetweenTwoPoints(this.center_point, net_top_center);
-            vel_x = -gameConstant.C_SPEED * (dx / d);
-            double new_vel_y = -gameConstant.C_SPEED * (dy / d);
+            vel_x = -GameConstant.C_SPEED * (dx / d);
+            double new_vel_y = -GameConstant.C_SPEED * (dy / d);
          //   if (this.vel_y > 0 && new_vel_y < 0) {
          //       this.change_direction = true;
          //   }
@@ -226,8 +225,8 @@ public class DynamicEntity extends StaticEntity {
         if (distance <= radius + animal.getRadius()) { // if collision then count new vel_x and vel_y
             // assuming that mass of animal is much greater than mass of ball
             if(last_collision !=Intersect_enum.ANIMAL) {
-                vel_x = -gameConstant.C_SPEED * (dx / distance);
-                vel_y = -gameConstant.C_SPEED * (dy / distance);
+                vel_x = -GameConstant.C_SPEED * (dx / distance);
+                vel_y = -GameConstant.C_SPEED * (dy / distance);
                 last_collision = Intersect_enum.ANIMAL;
             }
             return 1;
