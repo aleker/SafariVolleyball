@@ -102,14 +102,13 @@ public class GamePlay extends SceneWrapper {
         listOfPlayers = new Player[2];
         listOfPlayers[0] = PlayerList.newPlayer(Left_index, Player.LEFT_SIDE);
         listOfPlayers[1] = PlayerList.newPlayer(Right_index, Player.RIGHT_SIDE);
-
         listOfPlayers[0].createAnimal(0);
         listOfPlayers[1].createAnimal(1);
     }
 
     public void setNewServe(int player_number) {
-//        listOfPlayers[0].animal.startPos();
-//        listOfPlayers[1].animal.startPos();
+        //listOfPlayers[0].animal.startPos();
+        //listOfPlayers[1].animal.startPos();
         ball.setNewSetPosition(player_number);
     }
 
