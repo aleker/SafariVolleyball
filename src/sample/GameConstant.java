@@ -22,5 +22,7 @@ public class GameConstant {
     public static final double ANIMAL_GRAVITY = 200;
     public static final double ANIMAL_SCALE = 0.85;
 
+    public static final double BALL_SCALE = 0.85;
+
     public static final int MAX_POINTS = 15;
 }
