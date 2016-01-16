@@ -27,14 +27,7 @@ public class StaticEntity {
     }
     StaticEntity(){}
     GameConstant gameConstant;
-    public  class Point{
-        public double pos_x;
-        public double pos_y;
-        Point(double new_pos_x, double new_pos_y){
-            pos_x = new_pos_x;
-            pos_y = new_pos_y;
-        }
-    }
+
     Point point;
     public double width ;
     public double height  ;
