@@ -106,14 +106,8 @@ public class GamePlay extends SceneWrapper {
         gc.drawImage(background, 0, 0, this.width, this.height);
         gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
         gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
-        listOfPlayers[0].moveDecision(Animal.DIR_UP, deltaTime);
-        counter += deltaTime;
-        if (counter > 1.5) {
-            rightDir = 6 - (rightDir - 4);
-            System.out.println(rightDir);
-            counter -= 3;
-        }
-        listOfPlayers[1].moveDecision(rightDir, deltaTime);
+        listOfPlayers[0].moveDecision(0, deltaTime);
+        listOfPlayers[1].moveDecision(0, deltaTime);
         gc.drawImage(listOfPlayers[0].animal.image, listOfPlayers[0].animal.point.pos_x, listOfPlayers[0].animal.point.pos_y);
         gc.drawImage(listOfPlayers[1].animal.image, listOfPlayers[1].animal.point.pos_x, listOfPlayers[1].animal.point.pos_y);
     }

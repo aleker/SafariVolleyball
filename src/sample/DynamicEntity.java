@@ -30,6 +30,7 @@ public class DynamicEntity extends StaticEntity {
         RIGHT_WALL(false),
         NET(false),
         CEILING(false),
+        ANIMAL(false),
         GROUND(false);
         boolean intersect;
         private void setStatus(boolean new_status){
@@ -99,13 +100,13 @@ public class DynamicEntity extends StaticEntity {
     }
 
     private void collisionWithLeftWall(){
-        this.vel_x = - vel_x;
+        this.vel_x = Math.abs(vel_x);
     }
     private void collisionWithRightWall(){
-        this.vel_x = - vel_x;
+        this.vel_x = - Math.abs(vel_x);
     }
     private void collisionWithCeiling(){
-        this.vel_y = - vel_y;
+        this.vel_y = Math.abs(vel_y) ;
     }
     private void collisionWithGround(){
 
@@ -219,8 +220,11 @@ public class DynamicEntity extends StaticEntity {
         double radius = image.getWidth()/2;
         if (distance <= radius + animal.getRadius()) { // if collision then count new vel_x and vel_y
             // assuming that mass of animal is much greater than mass of ball
-            vel_x = -gameConstant.C_SPEED * (dx / distance);
-            vel_y = -gameConstant.C_SPEED * (dy / distance);
+            if(last_collision !=Intersect_enum.ANIMAL) {
+                vel_x = -gameConstant.C_SPEED * (dx / distance);
+                vel_y = -gameConstant.C_SPEED * (dy / distance);
+                last_collision = Intersect_enum.ANIMAL;
+            }
             return 1;
         }
         return 0;
