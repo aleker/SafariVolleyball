@@ -5,6 +5,31 @@ package sample;
  */
 public class DynamicEntity extends StaticEntity {
 
+    public DynamicEntity(String imagepath, double width, double height) {
+        this.point = new Point(GameConstant.C_START_POS_X,GameConstant.C_START_POS_Y);
+        this.path = imagepath;
+        vel_x = GameConstant.C_VEL_X;
+        vel_y = GameConstant.C_VEL_Y;
+        loadScaledImage(width, height);
+        this.width = width;
+        this.height = height;
+        setCenterPoint();
+        setRadius();
+    }
+
+    public DynamicEntity(String imagepath, double scale) {
+        this.point = new Point(GameConstant.C_START_POS_X,GameConstant.C_START_POS_Y);
+        this.path = imagepath;
+        vel_x = GameConstant.C_VEL_X;
+        vel_y = GameConstant.C_VEL_Y;
+        loadScaledImage(scale);
+        setWidth();
+        setHeight();
+        setCenterPoint();
+        setRadius();
+    }
+
+
     DynamicEntity(String imagepath) {
         this.point = new Point(GameConstant.C_START_POS_X,GameConstant.C_START_POS_Y);
         this.path = imagepath;
@@ -45,14 +70,14 @@ public class DynamicEntity extends StaticEntity {
         this.radius = width/2;
     }
 
-    public void calculateNewPosition(){
+    public void calculateNewPosition(double deltaTime){
       //  if (change_direction) {
       //      change_direction = false;
       //     vel_y = GameConstant.C_SPEED;
       //  }
-        this.point.pos_x +=vel_x;
-        this.point.pos_y +=vel_y;
-        this.vel_y +=GameConstant.C_GRAVITY;
+        this.point.pos_x +=vel_x*deltaTime;
+        this.point.pos_y +=vel_y*deltaTime;
+        this.vel_y +=GameConstant.C_GRAVITY*deltaTime;
 
     }
 
@@ -69,6 +94,7 @@ public class DynamicEntity extends StaticEntity {
     }
 
     public void detectStaticCollison( ) {
+        updateCenterPoint();
         this.intersect();
         Intersect_enum intersect_enum = Intersect_enum.LEFT_WALL;
         if (Intersect_enum.LEFT_WALL.intersect){
@@ -98,8 +124,7 @@ public class DynamicEntity extends StaticEntity {
             intersect_enum.setStatus(false);
             collisionWithNet();
         }
-
-
+        //calculateNewPosition();
     }
 
     private void collisionWithLeftWall(){
@@ -128,8 +153,11 @@ public class DynamicEntity extends StaticEntity {
             double dx = this.center_point.pos_x - net_top_center.pos_x;
             double dy = this.center_point.pos_y - net_top_center.pos_y;
             double d = distanceBetweenTwoPoints(this.center_point, net_top_center);
-            vel_x = -GameConstant.C_SPEED * (dx / d);
-            double new_vel_y = -GameConstant.C_SPEED * (dy / d);
+            //double speed = Math.sqrt(vel_x * vel_x + vel_y * vel_y);
+            double speed = Math.sqrt(GameConstant.C_SPEED * GameConstant.C_SPEED + 2 * GameConstant.C_GRAVITY *
+                    (point.pos_y - GameConstant.C_START_POS_Y));
+            vel_x = speed * (dx / d);
+            double new_vel_y = speed * (dy / d);
          //   if (this.vel_y > 0 && new_vel_y < 0) {
          //       this.change_direction = true;
          //   }
@@ -149,7 +177,6 @@ public class DynamicEntity extends StaticEntity {
     }
 
     public void intersect(){
-        //   int col_left_wall;
         Intersect_enum intersect_enum = Intersect_enum.LEFT_WALL;
         if(this.point.pos_x< 0){ // collison with left wall
             if(last_collision!=Intersect_enum.LEFT_WALL){
@@ -158,7 +185,6 @@ public class DynamicEntity extends StaticEntity {
             }
 
         }
-        // int col_right_wall;
         if( this.point.pos_x + this.width > 800){ // collision with right wall
             if(last_collision!=Intersect_enum.RIGHT_WALL){
                 intersect_enum = Intersect_enum.RIGHT_WALL;
@@ -167,7 +193,7 @@ public class DynamicEntity extends StaticEntity {
             }
 
         }
-        //  int col_ceiling;
+
         if(this.point.pos_y < 0){ // collision with ceiling
             if(last_collision!=Intersect_enum.CEILING){
                 intersect_enum = Intersect_enum.CEILING;
@@ -187,7 +213,7 @@ public class DynamicEntity extends StaticEntity {
 
         }
         updateCenterPoint();
-        if (distanceBetweenTwoPoints(net_top_center,this.center_point)<= this.radius + (list_of_staticEntity.get(4).width)/2  ){// collision with net
+        if (distanceBetweenTwoPoints(net_top_center,this.center_point)< radius  ){// collision with net
             if(last_collision!=Intersect_enum.NET){
                 intersect_enum = Intersect_enum.NET;
                 intersect_enum.setStatus(true);
@@ -225,10 +251,14 @@ public class DynamicEntity extends StaticEntity {
         if (distance <= radius + animal.getRadius()) { // if collision then count new vel_x and vel_y
             // assuming that mass of animal is much greater than mass of ball
             if(last_collision !=Intersect_enum.ANIMAL) {
-                vel_x = -GameConstant.C_SPEED * (dx / distance);
-                vel_y = -GameConstant.C_SPEED * (dy / distance);
+                //double speed = Math.sqrt(vel_x * vel_x + vel_y * vel_y);
+                double speed = Math.sqrt(GameConstant.C_SPEED * GameConstant.C_SPEED + 2 * GameConstant.C_GRAVITY *
+                        (point.pos_y - GameConstant.C_START_POS_Y));
+                vel_x = speed * (dx / distance);
+                vel_y = speed * (dy / distance);
                 last_collision = Intersect_enum.ANIMAL;
             }
+            //calculateNewPosition();
             return 1;
         }
         return 0;

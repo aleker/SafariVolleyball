@@ -10,6 +10,26 @@ import java.util.List;
 
 public class StaticEntity {
 
+    public StaticEntity(String imagepath, double pos_x, double pos_y, double width, double height) {
+        this.point = new Point(pos_x, pos_y);
+        this.path = imagepath;
+        loadScaledImage(width, height);
+        list_of_staticEntity.add(this);
+        this.width = width;
+        this.height = height;
+        setCenterPoint();
+    }
+
+    public StaticEntity(String imagepath, double pos_x, double pos_y, double scale) {
+        this.point = new Point(pos_x, pos_y);
+        this.path = imagepath;
+        loadScaledImage(scale);
+        list_of_staticEntity.add(this);
+        setWidth();
+        setHeight();
+        setCenterPoint();
+    }
+
     StaticEntity(String imagepath, double pos_x, double pos_y){//w scenie gameplay wywolywac konstruktory w kolejnosci left_wall,right_wall,celling,ground,net
         this.point = new Point(pos_x,pos_y);
         this.path = imagepath;
@@ -57,9 +77,19 @@ public class StaticEntity {
         image = new Image(path);
     }
 
+    public void loadScaledImage(double width, double height) {
+        // image scaling is done only once -- when it is being loaded so we can use smooth algorithm
+        image = new Image(path, width, height, false, true);
+    }
+
+    public void loadScaledImage(double scale) {
+        final Image originalImage = new Image(path);
+        image = new Image(path, originalImage.getWidth() * scale, originalImage.getHeight() * scale, true, true);
+    }
+
     public Point getNetTopCenter(){
         Point net_top_center = new Point((list_of_staticEntity.get(4).width)/2 + list_of_staticEntity.get(4).point.pos_x,
-                list_of_staticEntity.get(4).point.pos_y -  (list_of_staticEntity.get(4).width)/2);
+                list_of_staticEntity.get(4).point.pos_y +  (list_of_staticEntity.get(4).width)/2);
         return net_top_center;
     }
 
