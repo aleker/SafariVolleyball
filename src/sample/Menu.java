@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.application.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,8 +54,8 @@ public class Menu extends SceneWrapper {
         final ComboBox<String> leftPlayerComboBox = new ComboBox<String>();
         final ComboBox<String> rightPlayerComboBox = new ComboBox<String>();
         for (Class<?> type: PlayerList.playerList) {
-            leftPlayerComboBox.getItems().add(type.getName());
-            rightPlayerComboBox.getItems().add(type.getName());
+            leftPlayerComboBox.getItems().add(improveName(type.getName()));
+            rightPlayerComboBox.getItems().add(improveName(type.getName()));
         }
         leftPlayerComboBox.setValue(leftPlayerComboBox.getItems().get(0));
         rightPlayerComboBox.setValue(rightPlayerComboBox.getItems().get(0));
@@ -80,7 +81,6 @@ public class Menu extends SceneWrapper {
 
         this.group.getChildren().add(grid);
     }
-
     @Override
     public void handleEvents() {
 
@@ -93,4 +93,9 @@ public class Menu extends SceneWrapper {
 
     public void quit() { this.game.stage.close(); }
 
+    private String improveName(String name) {
+        // delete "sample."
+        name = name.substring(7, name.length());
+        return name;
+    }
 }
