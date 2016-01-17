@@ -48,4 +48,5 @@ public class Ball extends DynamicEntity {
         }
         return 0;
     }
+
 }
