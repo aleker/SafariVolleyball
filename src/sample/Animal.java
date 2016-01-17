@@ -165,11 +165,14 @@ public class Animal extends DynamicEntity {
     }
 
     public double getRadius() { return radius; }
+
     public Point getCenter() { return center; }
+
     private void countCenter() {
         center.pos_x = point.pos_x + image.getWidth()/2;
         center.pos_y = point.pos_y + animalHeadCenter;
     }
+
     private void detectStaticCollision() {
         if(point.pos_y + image.getHeight() > floorLevel) {
             point.pos_y = image.getHeight() + floorLevel;
