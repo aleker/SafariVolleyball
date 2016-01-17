@@ -8,6 +8,7 @@ public class AI_Joanna extends Player {
     private int RIGHT = 1;
     private int UP = 2;
     private int DOWN = 3;
+    private int ballDIR_X, ballDIR_Y;
     private int middle;
     private Point ballCoordinates;
     private Point pastBallCoordinates = new Point(0,0);
@@ -24,20 +25,14 @@ public class AI_Joanna extends Player {
         time = deltaTime;
         ballCoordinates = ball_point;
         boolean ballOnMySide = isBallOnMySide();
-        System.out.println(ballOnMySide);
 
-        /** DETECTING BALL MOVEMENT **/
-        int ballDIR_X, ballDIR_Y;
-        if(pastBallCoordinates.pos_x - ball_point.pos_x > 0) ballDIR_X = LEFT;
-        else ballDIR_X = RIGHT;
-        if(pastBallCoordinates.pos_y - ball_point.pos_y > 0) ballDIR_Y = UP;
-        else ballDIR_Y = DOWN;
+        detectBallMovement();
 
         /** MOVEMENT DECISION **/
         if(ballOnMySide) {
             if(animal.center.pos_x + 5 > ball_point.pos_x
                     && animal.center.pos_x - 5 < ball_point.pos_x
-                    && ball_point.pos_y < 150
+                    && ball_point.pos_y < 200
                     && ballDIR_Y == DOWN) {
                 animal.move(animal.DIR_UP, deltaTime);
             }
@@ -66,6 +61,13 @@ public class AI_Joanna extends Player {
             if(side == LEFT) return true;
             else return false;
         }
+    }
+
+    private void detectBallMovement() {
+        if(pastBallCoordinates.pos_x - ballCoordinates.pos_x > 0) ballDIR_X = LEFT;
+        else ballDIR_X = RIGHT;
+        if(pastBallCoordinates.pos_y - ballCoordinates.pos_y > 0) ballDIR_Y = UP;
+        else ballDIR_Y = DOWN;
     }
 
     private void prepare() {
