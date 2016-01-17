@@ -24,6 +24,7 @@ public class AI_Joanna extends Player {
         time = deltaTime;
         ballCoordinates = ball_point;
         boolean ballOnMySide = isBallOnMySide();
+        System.out.println(ballOnMySide);
 
         /** DETECTING BALL MOVEMENT **/
         int ballDIR_X, ballDIR_Y;
@@ -31,6 +32,26 @@ public class AI_Joanna extends Player {
         else ballDIR_X = RIGHT;
         if(pastBallCoordinates.pos_y - ball_point.pos_y > 0) ballDIR_Y = UP;
         else ballDIR_Y = DOWN;
+
+        /** MOVEMENT DECISION **/
+        if(ballOnMySide) {
+            if(animal.center.pos_x + 5 > ball_point.pos_x
+                    && animal.center.pos_x - 5 < ball_point.pos_x
+                    && ball_point.pos_y < 150
+                    && ballDIR_Y == DOWN) {
+                animal.move(animal.DIR_UP, deltaTime);
+            }
+            if(animal.center.pos_x < ball_point.pos_x) {
+                animal.move(animal.DIR_RIGHT, deltaTime);
+            }
+            else if(animal.center.pos_x > ball_point.pos_x) {
+                animal.move(animal.DIR_LEFT, deltaTime);
+            }
+            else animal.move(0, deltaTime);
+        }
+        else {
+            prepare();
+        }
 
         pastBallCoordinates.pos_x = ball_point.pos_x;
         pastBallCoordinates.pos_y = ball_point.pos_y;
@@ -49,15 +70,15 @@ public class AI_Joanna extends Player {
 
     private void prepare() {
         if(side == LEFT) {
-            if(animal.center_point.pos_x < middle/2)
+            if(animal.center.pos_x < middle/2)
                 animal.move(animal.DIR_RIGHT, time);
-            else if(animal.center_point.pos_x > middle/2)
+            else if(animal.center.pos_x > middle/2)
                 animal.move(animal.DIR_LEFT, time);
         }
         else {
-            if(animal.center_point.pos_x < middle + middle/2)
+            if(animal.center.pos_x < middle + middle/2)
                 animal.move(animal.DIR_RIGHT, time);
-            else if(animal.center_point.pos_x > middle + middle/2)
+            else if(animal.center.pos_x > middle + middle/2)
                 animal.move(animal.DIR_LEFT, time);
         }
     }
