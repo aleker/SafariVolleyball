@@ -93,7 +93,7 @@ public class DynamicEntity extends StaticEntity {
         }
     }
 
-    public void detectStaticCollison( ) {
+    public int detectStaticCollison( ) {
         updateCenterPoint();
         this.intersect();
         Intersect_enum intersect_enum = Intersect_enum.LEFT_WALL;
@@ -114,17 +114,26 @@ public class DynamicEntity extends StaticEntity {
             collisionWithCeiling();
         }
 
-        if(Intersect_enum.GROUND.intersect){
-            intersect_enum = Intersect_enum.GROUND;
-            intersect_enum.setStatus(false);
-            collisionWithGround();
-        }
+
         if(Intersect_enum.NET.intersect){
             intersect_enum = Intersect_enum.NET;
             intersect_enum.setStatus(false);
             collisionWithNet();
         }
-        //calculateNewPosition();
+        if(Intersect_enum.GROUND.intersect){
+            //only test
+            intersect_enum = Intersect_enum.GROUND;
+            intersect_enum.setStatus(false);
+            collisionWithGround();
+            //only test
+            if(point.pos_x <400){ // ball fell to the left side
+                return 0;
+            }
+            else{//ball fell to the right side
+                return 1;
+            }
+        }
+        return 2;
     }
 
     private void collisionWithLeftWall(){
@@ -136,7 +145,7 @@ public class DynamicEntity extends StaticEntity {
     private void collisionWithCeiling(){
         this.vel_y = Math.abs(vel_y) ;
     }
-    private void collisionWithGround(){
+    private void collisionWithGround(){ // this whole function is only test
 
         // loose score, end game or sth
         //it's only TEST
