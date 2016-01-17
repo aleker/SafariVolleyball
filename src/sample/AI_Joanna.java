@@ -30,26 +30,51 @@ public class AI_Joanna extends Player {
 
         /** MOVEMENT DECISION **/
         if(ballOnMySide) {
-            if(animal.center.pos_x + 5 > ball_point.pos_x
-                    && animal.center.pos_x - 5 < ball_point.pos_x
-                    && ball_point.pos_y < 200
-                    && ballDIR_Y == DOWN) {
-                animal.move(animal.DIR_UP, deltaTime);
+            int delta = 10;
+            int noJumpZone = 100;
+
+            /** PRIORITY IS FALLING IF IN THE AIR **/
+            if(animal.point.pos_y + animal.image.getHeight() < 600)
+                animal.move(0, time);
+            /** MOVEMENT DECISION FOR WHEN LEFT PLAYER **/
+            if(side == LEFT) {
+                if(ballCoordinates.pos_y < 400 && ballCoordinates.pos_y > 200 && ballDIR_Y == DOWN && ballDIR_X == RIGHT) {
+                    if(animal.center.pos_x < ballCoordinates.pos_x
+                            && animal.center.pos_x + delta > ballCoordinates.pos_x
+                            && animal.center.pos_x < middle - noJumpZone)
+                        animal.move(animal.DIR_UP, time);
+                }
+                else if(animal.center.pos_x + delta < ballCoordinates.pos_x) {
+                    animal.move(animal.DIR_RIGHT, time);
+                }
+                else if(animal.center.pos_x > ballCoordinates.pos_x) {
+                    animal.move(animal.DIR_LEFT, time);
+                }
+                else animal.move(0, time);
             }
-            if(animal.center.pos_x < ball_point.pos_x) {
-                animal.move(animal.DIR_RIGHT, deltaTime);
+            /** MOVEMENT DECISION FOR WHEN RIGHT PLAYER **/
+            else {
+                if(ballCoordinates.pos_y < 400 && ballCoordinates.pos_y > 200 && ballDIR_Y == DOWN && ballDIR_X == LEFT) {
+                    if(animal.center.pos_x - delta < ballCoordinates.pos_x
+                            && animal.center.pos_x > ballCoordinates.pos_x
+                            && animal.center.pos_x > middle + noJumpZone)
+                        animal.move(animal.DIR_UP, time);
+                }
+                else if(animal.center.pos_x < ballCoordinates.pos_x) {
+                    animal.move(animal.DIR_RIGHT, time);
+                }
+                else if(animal.center.pos_x - delta > ballCoordinates.pos_x) {
+                    animal.move(animal.DIR_LEFT, time);
+                }
+                else animal.move(0, time);
             }
-            else if(animal.center.pos_x > ball_point.pos_x) {
-                animal.move(animal.DIR_LEFT, deltaTime);
-            }
-            else animal.move(0, deltaTime);
         }
         else {
             prepare();
         }
 
-        pastBallCoordinates.pos_x = ball_point.pos_x;
-        pastBallCoordinates.pos_y = ball_point.pos_y;
+        pastBallCoordinates.pos_x = ballCoordinates.pos_x;
+        pastBallCoordinates.pos_y = ballCoordinates.pos_y;
     }
 
     private boolean isBallOnMySide() {
@@ -76,12 +101,14 @@ public class AI_Joanna extends Player {
                 animal.move(animal.DIR_RIGHT, time);
             else if(animal.center.pos_x > middle/2)
                 animal.move(animal.DIR_LEFT, time);
+            else animal.move(0, time);
         }
         else {
             if(animal.center.pos_x < middle + middle/2)
                 animal.move(animal.DIR_RIGHT, time);
             else if(animal.center.pos_x > middle + middle/2)
                 animal.move(animal.DIR_LEFT, time);
+            else animal.move(0, time);
         }
     }
 }
