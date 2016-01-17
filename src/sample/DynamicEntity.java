@@ -91,6 +91,8 @@ public class DynamicEntity extends StaticEntity {
             this.point.pos_x = 200;
             this.point.pos_y = 100;
         }
+        vel_x = GameConstant.C_VEL_X;
+        vel_y = GameConstant.C_VEL_Y;
     }
 
     public int detectStaticCollison( ) {

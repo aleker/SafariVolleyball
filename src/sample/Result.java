@@ -14,8 +14,9 @@ public class Result extends SceneWrapper {
     int winner;
     int points[];
 
-    public Result(Group root, Game game, int windowWidth, int windowHeight) {
+    public Result(Group root, Game game, int windowWidth, int windowHeight, int winner) {
         super(root, game, windowWidth, windowHeight);
+        this.winner = winner;
         initialize();
         handleEvents();
     }
@@ -24,7 +25,9 @@ public class Result extends SceneWrapper {
     public void initialize() {
         this.addBackground(new Image("file:src/Pictures/background.png"));
         // INFO ABOUT WINNER
-        final Label label = new Label("The winner is:");
+        final Label label;
+        if (winner == Player.LEFT_SIDE) label = new Label("The winner is: Left Player!");
+        else label = new Label("The winner is: Right Player!");
         label.setStyle("-fx-font: 16 verdana; -fx-text-fill: snow");
         label.setLayoutX(270);
         label.setLayoutY(250);

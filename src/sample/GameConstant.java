@@ -28,6 +28,6 @@ public class GameConstant {
 
     public static final double BALL_SCALE = 0.85;
 
-    public static final int MAX_POINTS = 15;
+    public static final int MAX_POINTS = 2;
     public static final int MAX_AMOUNT_OF_BOUNCES = 20;
 }
