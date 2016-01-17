@@ -7,10 +7,10 @@ public class AI_Ola extends Player {
 
     private double leftLimit;
     private double rightLimit;
-    private Point old_ball_point;
     private int attack_side;
     private boolean attack = false;
 
+    private static final int threshold = 7;
     private static final int GAME_WIDTH = 800;
     private static final int GAME_HEIGHT = 600;
     private static final int ATTACK_LEFT = 0;
@@ -35,7 +35,7 @@ public class AI_Ola extends Player {
         // if ball is on my side
         if (attack_side == ATTACK_LEFT) {
             // if ball is on the LEFT side of the animal
-            if (ball_point.pos_x < animal.point.pos_x && ball_point.pos_x > leftLimit) {
+            if (ball_point.pos_x + threshold < animal.center.pos_x && ball_point.pos_x > leftLimit) {
                 if (attack(deltaTime, ball_point)) return;
                 else {
                     animal.move(Animal.DIR_LEFT, deltaTime);
@@ -44,7 +44,7 @@ public class AI_Ola extends Player {
                 }
             }
             // if ball is on the RIGHT side of the animal
-            else if (ball_point.pos_x > animal.point.pos_x) {
+            else if (ball_point.pos_x > animal.center.pos_x) {
                 if (attack(deltaTime, ball_point)) return;
                 else animal.move(Animal.DIR_RIGHT, deltaTime);
                 return;
@@ -53,13 +53,13 @@ public class AI_Ola extends Player {
         }
         else if (attack_side == ATTACK_RIGHT) {
             // if ball is on the LEFT side of the animal
-            if (ball_point.pos_x < animal.point.pos_x) {
+            if (ball_point.pos_x < animal.center.pos_x) {
                 if (attack(deltaTime, ball_point)) return;
                 else animal.move(Animal.DIR_LEFT, deltaTime);
                 return;
             }
             // if ball is on the RIGHT side of the animal
-            else if (ball_point.pos_x > animal.point.pos_x && ball_point.pos_x < rightLimit) {
+            else if (ball_point.pos_x - threshold > animal.center.pos_x && ball_point.pos_x < rightLimit) {
                 if (attack(deltaTime, ball_point)) return;
                 else {
                     animal.move(Animal.DIR_RIGHT, deltaTime);
@@ -74,7 +74,7 @@ public class AI_Ola extends Player {
     }
 
     private boolean attack(double deltaTime, Point ball_point) {
-        if ( ball_point.pos_y < GAME_HEIGHT/5 && attack) {
+        if ( ball_point.pos_y < GAME_HEIGHT/6 && attack) {
             animal.move(Animal.DIR_UP, deltaTime);
             attack = false;
             return true;

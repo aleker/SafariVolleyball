@@ -3,11 +3,11 @@ package sample;
 /**
  * Created by AiS on 2016-01-17.
  */
-public class AIAleksander extends Player {
+public class AI_Aleksander extends Player {
     private static final double a = 10.0;
     private final double b;
 
-    public AIAleksander(int side) {
+    public AI_Aleksander(int side) {
         super(side);
         b = (1 - 2 * side);
     }

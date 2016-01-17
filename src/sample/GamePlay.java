@@ -52,7 +52,7 @@ public class GamePlay extends SceneWrapper {
         move = new int[2][1];
 
         this.addBackground(new Image("file:src/Pictures/background.png"));
-        Canvas canvas = new Canvas(800, 600);
+        Canvas canvas = new Canvas(GameConstant.WINDOW_WIDTH, GameConstant.WINDOW_HEIGHT);
         gc = canvas.getGraphicsContext2D();
         group.getChildren().add(canvas);
         createEntities();
@@ -84,7 +84,7 @@ public class GamePlay extends SceneWrapper {
                     move[Player.LEFT_SIDE][0] = Animal.DIR_UP;
                     break;
                 case ESCAPE:
-                    this.exit(new Menu(new Group(), this.game, 600, 400));
+                    this.exit(new Menu(new Group(), this.game, GameConstant.MENU_WIDTH, GameConstant.MENU_HEIGHT));
                     break;
             }
         });
@@ -126,7 +126,7 @@ public class GamePlay extends SceneWrapper {
             points[scoredPlayer]++;
             if (points[scoredPlayer] >= GameConstant.MAX_POINTS ) {
                 // GAME OVER
-                this.exit(new Result(new Group(), this.game, 800, 600, scoredPlayer));
+                this.exit(new Result(new Group(), this.game, GameConstant.WINDOW_WIDTH, GameConstant.WINDOW_HEIGHT, scoredPlayer));
                 playing = false;
             }
             setNewServe(scoredPlayer);
