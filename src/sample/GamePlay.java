@@ -1,12 +1,15 @@
 package sample;
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -16,6 +19,7 @@ public class GamePlay extends SceneWrapper {
 
     Player listOfPlayers[];
     int points[];
+    private static boolean newset = false;
     private static boolean playing;
     private DynamicEntity ball;
     private StaticEntity leftwall;
@@ -114,6 +118,16 @@ public class GamePlay extends SceneWrapper {
         boolean contact = false;
         this.time = deltaTime;
 
+        // pause for 1 second
+        if (newset) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            newset = false;
+        }
+
         // COLLISION WITH FLOOR:
         int floor_collision = ball.detectStaticCollison();
         if (floor_collision < 2) {
@@ -125,7 +139,6 @@ public class GamePlay extends SceneWrapper {
                 this.exit(new Result(new Group(), this.game, 800, 600, scoredPlayer));
                 playing = false;
             }
-            System.out.println(points[0] + " " + points[1]);
             setNewServe(scoredPlayer);
         }
 
@@ -179,6 +192,11 @@ public class GamePlay extends SceneWrapper {
         gc.setFill(Color.ORANGERED);
         gc.fillText(new Integer(points[0]).toString(), this.getWidth()/2 - 80, 70);
         gc.fillText(new Integer(points[1]).toString(), this.getWidth()/2 + 30, 70);
+
+        if (newset) {
+            gc.setFont(Font.font("Verdana", FontWeight.THIN, FontPosture.REGULAR, 80));
+            gc.fillText("New Serve", this.getWidth()/2 - 200, 250);
+        }
     }
 
     public static boolean stop() {
@@ -219,6 +237,7 @@ public class GamePlay extends SceneWrapper {
 
         // BALL
         ball.setNewSetPosition(player_number);
+        newset = true;
     }
 
     private void whichMoveDecision() {
