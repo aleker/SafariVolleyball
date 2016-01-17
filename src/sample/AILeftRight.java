@@ -12,7 +12,7 @@ public class AILeftRight extends Player {
     }
 
     @Override
-    public void moveDecision(int dir, double deltaTime) {
+    public void moveDecision(int dir, double deltaTime, Point ball_point) {
         counter += deltaTime;
         if (counter > 1.5) {
             direction = 6 - (direction - 4);

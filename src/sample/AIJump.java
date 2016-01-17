@@ -9,7 +9,7 @@ public class AIJump extends Player {
     }
 
     @Override
-    public void moveDecision(int direction, double deltaTime) {
+    public void moveDecision(int direction, double deltaTime, Point ball_point) {
         animal.move(Animal.DIR_UP, deltaTime);
     }
 }
