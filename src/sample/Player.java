@@ -51,11 +51,11 @@ public class Player {
         // colour
         this.colour = colour;
         animal = new Animal(colour, px, py, leftLimit, rightLimit);
-
     }
 
     public void moveDecision(int direction, double deltaTime, Point ball_point) {
         // ball_point used in AI
         animal.move(direction, deltaTime);
     }
+
 }

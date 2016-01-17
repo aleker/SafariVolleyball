@@ -133,7 +133,7 @@ public class DynamicEntity extends StaticEntity {
             intersect_enum.setStatus(false);
             collisionWithGround();
             //only test
-            if(point.pos_x <400){ // ball fell to the left side
+            if(center_point.pos_x < GameConstant.WINDOW_WIDTH/2){ // ball fell to the left side
                 return 0;
             }
             else{//ball fell to the right side

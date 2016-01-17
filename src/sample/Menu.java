@@ -52,7 +52,7 @@ public class Menu extends SceneWrapper {
         // NEW GAME
         Button b_newGame = new Button("Start");
         b_newGame.setOnAction(e -> {
-            GamePlay game = new GamePlay(new Group(), this.game, 800, 600,
+            GamePlay game = new GamePlay(new Group(), this.game, GameConstant.WINDOW_WIDTH, GameConstant.WINDOW_HEIGHT,
                     leftPlayerComboBox.getSelectionModel().getSelectedIndex(),
                     rightPlayerComboBox.getSelectionModel().getSelectedIndex());
             this.exit(game);
