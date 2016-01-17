@@ -156,26 +156,27 @@ public class GamePlay extends SceneWrapper {
             }
             sideOfLastContact = sideOfContact;
         }
+        // MOVE DECISION FOR ANIMALS:
+        whichMoveDecision();
 
         // DISPLAYING:
+        // entities:
         ball.calculateNewPosition(deltaTime);
         gc.clearRect(0, 0, 800, 600);
         gc.drawImage(background, 0, 0, this.width, this.height);
         gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
         gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
-
-        whichMoveDecision();
-
         gc.drawImage(listOfPlayers[0].animal.image, listOfPlayers[0].animal.point.pos_x, listOfPlayers[0].animal.point.pos_y);
         gc.drawImage(listOfPlayers[1].animal.image, listOfPlayers[1].animal.point.pos_x, listOfPlayers[1].animal.point.pos_y);
 
+        // bounces:
         DropShadow ds = new DropShadow();
         ds.setOffsetY(3.0f);
         gc.setFont(Font.font("Verdana", FontWeight.NORMAL, 18));
         gc.setFill(Color.BLACK);
-        gc.fillText(new Integer(noOfConsecutiveContacts).toString(), 200, 20);
+        //gc.fillText(new Integer(noOfConsecutiveContacts).toString(), 200, 20);
 
-        // displaying points:
+        // points:
         gc.setFont(Font.font("Verdana", FontWeight.THIN, FontPosture.REGULAR, 80));
         gc.setEffect(ds);
         gc.setFill(Color.ORANGERED);
