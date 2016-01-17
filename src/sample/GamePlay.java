@@ -43,7 +43,6 @@ public class GamePlay extends SceneWrapper {
     public void initialize() {
 
         points = new int[2];
-
         move = new int[2][1];
 
         this.addBackground(new Image("file:src/Pictures/background.png"));
@@ -118,7 +117,15 @@ public class GamePlay extends SceneWrapper {
         int sideOfContact = Player.LEFT_SIDE;
         boolean contact = false;
         this.time = deltaTime;
-        ball.detectStaticCollison();
+
+        // COLLISION WITH FLOOR:
+        int floor_collision = ball.detectStaticCollison();
+        if (floor_collision < 3) {
+            int scoredPlayer = Player.LEFT_SIDE;
+            if (floor_collision == 0) scoredPlayer = Player.RIGHT_SIDE;
+            points[scoredPlayer]++;
+            setNewServe(scoredPlayer);
+        }
 
         for (int i = Player.LEFT_SIDE; i <= Player.RIGHT_SIDE; i++) {
             if (ball.detectDynamicCollision(listOfPlayers[i].animal) != 0) {
@@ -129,6 +136,16 @@ public class GamePlay extends SceneWrapper {
         if (contact) {
             if (sideOfContact == sideOfLastContact) {
                 noOfConsecutiveContacts++;
+                if (noOfConsecutiveContacts > GameConstant.MAX_AMOUNT_OF_BOUNCES) {
+                    noOfConsecutiveContacts = 0;
+                    // FOR MAX_AMOUNT_OF_BOUNCES RESTRICTION:
+                    // sideOfContact -> Player who scored
+                    if (sideOfContact == Player.LEFT_SIDE) { sideOfContact = Player.RIGHT_SIDE; }
+                    else { sideOfContact = Player.LEFT_SIDE; }
+                    points[sideOfContact]++;
+                    setNewServe(sideOfContact);
+                    //
+                }
             } else {
                 noOfConsecutiveContacts = 1;
             }
@@ -173,6 +190,7 @@ public class GamePlay extends SceneWrapper {
     }
 
     public void setNewServe(int player_number) {
+        System.out.println("setNewServe for " + player_number);
         double leftLimit, rightLimit;
         // LEFT PLAYER
         leftLimit = leftwall.point.pos_x + leftwall.width;
