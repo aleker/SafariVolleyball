@@ -41,8 +41,8 @@ public class Menu extends SceneWrapper {
         final ComboBox<String> leftPlayerComboBox = new ComboBox<String>();
         final ComboBox<String> rightPlayerComboBox = new ComboBox<String>();
         for (Class<?> type: PlayerList.playerList) {
-            leftPlayerComboBox.getItems().add(improveName(type.getName()));
-            rightPlayerComboBox.getItems().add(improveName(type.getName()));
+            leftPlayerComboBox.getItems().add(type.getSimpleName());
+            rightPlayerComboBox.getItems().add(type.getSimpleName());
         }
         leftPlayerComboBox.setValue(leftPlayerComboBox.getItems().get(0));
         rightPlayerComboBox.setValue(rightPlayerComboBox.getItems().get(0));
