@@ -173,8 +173,18 @@ public class GamePlay extends SceneWrapper {
     }
 
     public void setNewServe(int player_number) {
-        //listOfPlayers[0].animal.startPos();
-        //listOfPlayers[1].animal.startPos();
+        double leftLimit, rightLimit;
+        // LEFT PLAYER
+        leftLimit = leftwall.point.pos_x + leftwall.width;
+        rightLimit = net.point.pos_x;
+        listOfPlayers[0].animal.getOnPosition((leftLimit + rightLimit) / 2,ground.point.pos_y);
+
+        // RIGHT PLAYER
+        leftLimit = net.point.pos_x + net.width;
+        rightLimit = rightwall.point.pos_x;
+        listOfPlayers[1].animal.getOnPosition((leftLimit + rightLimit) / 2,ground.point.pos_y);
+
+        // BALL
         ball.setNewSetPosition(player_number);
     }
 

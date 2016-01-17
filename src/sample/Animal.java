@@ -52,6 +52,15 @@ public class Animal extends DynamicEntity {
         countCenter();
     }
 
+    public void getOnPosition(double x, double y) {
+        point.pos_x = x;
+        point.pos_y = y;
+        vel_x = 0;
+        vel_y = 0;
+        inTheAir = false;
+        countCenter();
+    }
+
     public void move(int direction, double deltaTime) {
         double acc_x = 0;
         switch (direction) {
