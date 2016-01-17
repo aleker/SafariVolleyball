@@ -10,6 +10,7 @@ public class AI_Joanna extends Player {
     private int DOWN = 3;
     private int middle;
     private Point ballCoordinates;
+    private Point pastBallCoordinates = new Point(0,0);
 
     public AI_Joanna(int side) {
         super(side);
@@ -21,9 +22,18 @@ public class AI_Joanna extends Player {
     public void moveDecision(int direction, double deltaTime, Point ball_point) {
 
         time = deltaTime;
-
         ballCoordinates = ball_point;
         boolean ballOnMySide = isBallOnMySide();
+
+        /** DETECTING BALL MOVEMENT **/
+        int ballDIR_X, ballDIR_Y;
+        if(pastBallCoordinates.pos_x - ball_point.pos_x > 0) ballDIR_X = LEFT;
+        else ballDIR_X = RIGHT;
+        if(pastBallCoordinates.pos_y - ball_point.pos_y > 0) ballDIR_Y = UP;
+        else ballDIR_Y = DOWN;
+
+        pastBallCoordinates.pos_x = ball_point.pos_x;
+        pastBallCoordinates.pos_y = ball_point.pos_y;
     }
 
     private boolean isBallOnMySide() {
