@@ -23,9 +23,10 @@ public class Game extends Application {
     }
 
     public void launchScene(SceneWrapper scene) {
-        this.currentScene = scene;
-        this.stage.setScene(scene);
-        scene.run();
+        if(currentScene != null) currentScene.stopScene();
+        currentScene = scene;
+        stage.setScene(scene);
+        scene.runScene();
     }
 
     public static void main(String[] args) {
