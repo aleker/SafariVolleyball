@@ -54,7 +54,8 @@ public class Player {
 
     }
 
-    public void moveDecision(int direction, double deltaTime) {
+    public void moveDecision(int direction, double deltaTime, Point ball_point) {
+        // ball_point used in AI
         animal.move(direction, deltaTime);
     }
 }
