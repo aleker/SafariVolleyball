@@ -40,6 +40,7 @@ public class DynamicEntity extends StaticEntity {
         setHeight();
         setCenterPoint();
         setRadius();
+        last_collision = Intersect_enum.NOTHING;
     }
 
     public double  vel_x;
@@ -56,7 +57,8 @@ public class DynamicEntity extends StaticEntity {
         NET(false),
         CEILING(false),
         ANIMAL(false),
-        GROUND(false);
+        GROUND(false),
+        NOTHING(false);
         boolean intersect;
         private void setStatus(boolean new_status){
             intersect = new_status;
@@ -75,25 +77,29 @@ public class DynamicEntity extends StaticEntity {
       //      change_direction = false;
       //     vel_y = GameConstant.C_SPEED;
       //  }
+
         this.point.pos_x +=vel_x*deltaTime;
         this.point.pos_y +=vel_y*deltaTime;
+        double old_vel_y = vel_y;
         this.vel_y +=GameConstant.C_GRAVITY*deltaTime;
-
+        if(old_vel_y < 0 && vel_y > 0) last_collision = Intersect_enum.NOTHING;
     }
 
     public void setNewSetPosition(int side){
         if(side == 0){ //left side
-            this.point.pos_x = 600;
+            this.point.pos_x = 200;
             this.point.pos_y = 100;
 
         }
         else{ //right side
-            this.point.pos_x = 200;
+            this.point.pos_x = 600;
             this.point.pos_y = 100;
         }
+        vel_x = GameConstant.C_VEL_X;
+        vel_y = GameConstant.C_VEL_Y;
     }
 
-    public void detectStaticCollison( ) {
+    public int detectStaticCollison( ) {
         updateCenterPoint();
         this.intersect();
         Intersect_enum intersect_enum = Intersect_enum.LEFT_WALL;
@@ -114,17 +120,27 @@ public class DynamicEntity extends StaticEntity {
             collisionWithCeiling();
         }
 
-        if(Intersect_enum.GROUND.intersect){
-            intersect_enum = Intersect_enum.GROUND;
-            intersect_enum.setStatus(false);
-            collisionWithGround();
-        }
+
         if(Intersect_enum.NET.intersect){
             intersect_enum = Intersect_enum.NET;
             intersect_enum.setStatus(false);
             collisionWithNet();
         }
-        //calculateNewPosition();
+        if(Intersect_enum.GROUND.intersect){
+            //only test
+            last_collision = Intersect_enum.NOTHING;
+            intersect_enum = Intersect_enum.GROUND;
+            intersect_enum.setStatus(false);
+            collisionWithGround();
+            //only test
+            if(point.pos_x <400){ // ball fell to the left side
+                return 0;
+            }
+            else{//ball fell to the right side
+                return 1;
+            }
+        }
+        return 2;
     }
 
     private void collisionWithLeftWall(){
@@ -136,7 +152,7 @@ public class DynamicEntity extends StaticEntity {
     private void collisionWithCeiling(){
         this.vel_y = Math.abs(vel_y) ;
     }
-    private void collisionWithGround(){
+    private void collisionWithGround(){ // this whole function is only test
 
         // loose score, end game or sth
         //it's only TEST

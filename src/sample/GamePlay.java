@@ -1,13 +1,18 @@
 package sample;
 
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
 public class GamePlay extends SceneWrapper {
@@ -22,8 +27,8 @@ public class GamePlay extends SceneWrapper {
     private StaticEntity ground;
     private StaticEntity net;
     private GraphicsContext gc;
-    public int Left_index = 1;
-    public int Right_index = 1;
+    public int Left_index;
+    public int Right_index;
     private int noOfConsecutiveContacts = 0;
     private int sideOfLastContact = Player.LEFT_SIDE;
 
@@ -43,7 +48,6 @@ public class GamePlay extends SceneWrapper {
     public void initialize() {
 
         points = new int[2];
-
         move = new int[2][1];
 
         this.addBackground(new Image("file:src/Pictures/background.png"));
@@ -53,12 +57,6 @@ public class GamePlay extends SceneWrapper {
         createEntities();
         // entities should be created before players
         createPlayers();
-
-        // temporary button
-        Button b_result = new Button("Go to Result_scene");
-        b_result.setOnAction(e -> this.exit(new Result(new Group(), this.game, 800, 600)));
-        this.addEntity(b_result);
-        //end temporary button
         playing = true;
     }
 
@@ -118,8 +116,22 @@ public class GamePlay extends SceneWrapper {
         int sideOfContact = Player.LEFT_SIDE;
         boolean contact = false;
         this.time = deltaTime;
-        ball.detectStaticCollison();
 
+        // COLLISION WITH FLOOR:
+        int floor_collision = ball.detectStaticCollison();
+        if (floor_collision < 2) {
+            int scoredPlayer = Player.LEFT_SIDE;
+            if (floor_collision == 0) scoredPlayer = Player.RIGHT_SIDE;
+            points[scoredPlayer]++;
+            if (points[scoredPlayer] >= GameConstant.MAX_POINTS ) {
+                // GAME OVER
+                this.exit(new Result(new Group(), this.game, 800, 600, scoredPlayer));
+                playing = false;
+            }
+            setNewServe(scoredPlayer);
+        }
+
+        // BOUNCES COUNTER:
         for (int i = Player.LEFT_SIDE; i <= Player.RIGHT_SIDE; i++) {
             if (ball.detectDynamicCollision(listOfPlayers[i].animal) != 0) {
                 contact = true;
@@ -129,26 +141,48 @@ public class GamePlay extends SceneWrapper {
         if (contact) {
             if (sideOfContact == sideOfLastContact) {
                 noOfConsecutiveContacts++;
+                if (noOfConsecutiveContacts > GameConstant.MAX_AMOUNT_OF_BOUNCES) {
+                    noOfConsecutiveContacts = 0;
+                    // FOR MAX_AMOUNT_OF_BOUNCES RESTRICTION:
+                    // sideOfContact -> Player who scored
+                    //if (sideOfContact == Player.LEFT_SIDE) { sideOfContact = Player.RIGHT_SIDE; }
+                    //else { sideOfContact = Player.LEFT_SIDE; }
+                    //points[sideOfContact]++;
+                    //setNewServe(sideOfContact);
+                    //
+                }
             } else {
                 noOfConsecutiveContacts = 1;
             }
             sideOfLastContact = sideOfContact;
         }
+        // MOVE DECISION FOR ANIMALS:
+        whichMoveDecision();
 
+        // DISPLAYING:
+        // entities:
         ball.calculateNewPosition(deltaTime);
         gc.clearRect(0, 0, 800, 600);
         gc.drawImage(background, 0, 0, this.width, this.height);
         gc.drawImage(net.image, net.point.pos_x, net.point.pos_y);
         gc.drawImage(ball.image, ball.point.pos_x, ball.point.pos_y);
-
-        whichMoveDecision();
-
         gc.drawImage(listOfPlayers[0].animal.image, listOfPlayers[0].animal.point.pos_x, listOfPlayers[0].animal.point.pos_y);
         gc.drawImage(listOfPlayers[1].animal.image, listOfPlayers[1].animal.point.pos_x, listOfPlayers[1].animal.point.pos_y);
 
+        // bounces:
+        DropShadow ds = new DropShadow();
+        ds.setOffsetY(3.0f);
         gc.setFont(Font.font("Verdana", FontWeight.NORMAL, 18));
         gc.setFill(Color.BLACK);
-        gc.fillText(new Integer(noOfConsecutiveContacts).toString(), 200, 20);
+        //gc.fillText(new Integer(noOfConsecutiveContacts).toString(), 200, 20);
+
+        // points:
+        gc.setFont(Font.font("Verdana", FontWeight.THIN, FontPosture.REGULAR, 80));
+        gc.setEffect(ds);
+        gc.setFill(Color.ORANGERED);
+        gc.fillText(new Integer(points[0]).toString(), this.getWidth()/2 - 80, 70);
+        gc.fillText(new Integer(points[1]).toString(), this.getWidth()/2 + 30, 70);
+
     }
 
     public static boolean stop() {
@@ -168,14 +202,25 @@ public class GamePlay extends SceneWrapper {
         listOfPlayers = new Player[2];
         listOfPlayers[0] = PlayerList.newPlayer(Left_index, Player.LEFT_SIDE);
         listOfPlayers[1] = PlayerList.newPlayer(Right_index, Player.RIGHT_SIDE);
-
         listOfPlayers[0].createAnimal(0);
         listOfPlayers[1].createAnimal(1);
     }
 
     public void setNewServe(int player_number) {
-//        listOfPlayers[0].animal.startPos();
-//        listOfPlayers[1].animal.startPos();
+        double leftLimit, rightLimit;
+        // LEFT PLAYER
+        leftLimit = leftwall.point.pos_x + leftwall.width;
+        rightLimit = net.point.pos_x;
+        listOfPlayers[0].animal.getOnPosition((leftLimit + rightLimit) / 2 - listOfPlayers[0].animal.width/2,
+                ground.point.pos_y);
+
+        // RIGHT PLAYER
+        leftLimit = net.point.pos_x + net.width;
+        rightLimit = rightwall.point.pos_x;
+        listOfPlayers[1].animal.getOnPosition((leftLimit + rightLimit) / 2- listOfPlayers[0].animal.width/2,
+                ground.point.pos_y);
+
+        // BALL
         ball.setNewSetPosition(player_number);
     }
 
