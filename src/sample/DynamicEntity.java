@@ -40,6 +40,7 @@ public class DynamicEntity extends StaticEntity {
         setHeight();
         setCenterPoint();
         setRadius();
+        last_collision = Intersect_enum.NOTHING;
     }
 
     public double  vel_x;
@@ -56,7 +57,8 @@ public class DynamicEntity extends StaticEntity {
         NET(false),
         CEILING(false),
         ANIMAL(false),
-        GROUND(false);
+        GROUND(false),
+        NOTHING(false);
         boolean intersect;
         private void setStatus(boolean new_status){
             intersect = new_status;
@@ -75,10 +77,12 @@ public class DynamicEntity extends StaticEntity {
       //      change_direction = false;
       //     vel_y = GameConstant.C_SPEED;
       //  }
+
         this.point.pos_x +=vel_x*deltaTime;
         this.point.pos_y +=vel_y*deltaTime;
+        double old_vel_y = vel_y;
         this.vel_y +=GameConstant.C_GRAVITY*deltaTime;
-
+        if(old_vel_y < 0 && vel_y > 0) last_collision = Intersect_enum.NOTHING;
     }
 
     public void setNewSetPosition(int side){
@@ -124,6 +128,7 @@ public class DynamicEntity extends StaticEntity {
         }
         if(Intersect_enum.GROUND.intersect){
             //only test
+            last_collision = Intersect_enum.NOTHING;
             intersect_enum = Intersect_enum.GROUND;
             intersect_enum.setStatus(false);
             collisionWithGround();
