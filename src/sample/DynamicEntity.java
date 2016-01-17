@@ -87,12 +87,12 @@ public class DynamicEntity extends StaticEntity {
 
     public void setNewSetPosition(int side){
         if(side == 0){ //left side
-            this.point.pos_x = 600;
+            this.point.pos_x = 200;
             this.point.pos_y = 100;
 
         }
         else{ //right side
-            this.point.pos_x = 200;
+            this.point.pos_x = 600;
             this.point.pos_y = 100;
         }
         vel_x = GameConstant.C_VEL_X;
