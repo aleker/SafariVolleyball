@@ -6,7 +6,7 @@ import java.lang.reflect.Constructor;
  * Created by aleksander-zn on 2016-01-10.
  */
 public class PlayerList {
-    public static final Class<?>[] playerList = {Player.class, AI_Ola.class, AI_Izabela.class, AI_Aleksander.class};
+    public static final Class<?>[] playerList = {Player.class, AI_Ola.class, AI_Aleksander.class};
     public static Player newPlayer(int index, int side) {
         try {
             @SuppressWarnings("unchecked")
