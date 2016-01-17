@@ -22,6 +22,8 @@ public abstract class SceneWrapper extends Scene {
 
     protected Image background;
 
+    private AnimationTimer animationTimer;
+
     public SceneWrapper(Pane root, Game game, int windowWidth, int windowHeight) {
         super(root, windowWidth, windowHeight);
         this.game = game;
@@ -46,8 +48,8 @@ public abstract class SceneWrapper extends Scene {
 
     public abstract void handleEvents();
 
-    public void run() {
-        new AnimationTimer() {
+    public void runScene() {
+        animationTimer = new AnimationTimer() {
             private long previousCallTime;
 
             @Override
@@ -64,7 +66,12 @@ public abstract class SceneWrapper extends Scene {
 
                 previousCallTime = currentTime;
             }
-        }.start();
+        };
+        animationTimer.start();
+    }
+
+    public void stopScene() {
+        animationTimer.stop();
     }
 
     public abstract void update(double deltaTime);
