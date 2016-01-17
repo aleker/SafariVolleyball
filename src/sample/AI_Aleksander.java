@@ -33,7 +33,7 @@ public class AI_Aleksander extends Player {
             if (b < 0)  direction = Animal.DIR_RIGHT;
             else        direction = Animal.DIR_LEFT;
         }
-        if (dx * b > a) {
+        if (dx * b > a/2) {
             long speed = Math.round(Math.abs(dx) / e);
             if (speed > 10) speed = 10;
             if (counter > speed) direction = 0;
