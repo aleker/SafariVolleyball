@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.property.Property;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -226,26 +227,25 @@ public class GamePlay extends SceneWrapper {
 
     private void whichMoveDecision() {
         if(move[Player.RIGHT_SIDE][0] == Animal.DIR_LEFT)
-            listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.DIR_LEFT, this.time);
+            listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.DIR_LEFT, this.time, ball.point);
 
         else if(move[Player.RIGHT_SIDE][0] == Animal.DIR_RIGHT)
-            listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.DIR_RIGHT, this.time);
+            listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.DIR_RIGHT, this.time, ball.point);
 
         else if(move[Player.RIGHT_SIDE][0] == Animal.DIR_UP)
-            listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.DIR_UP, this.time);
+            listOfPlayers[Player.RIGHT_SIDE].moveDecision(Animal.DIR_UP, this.time, ball.point);
 
-        else listOfPlayers[Player.RIGHT_SIDE].moveDecision(0, this.time);
+        else listOfPlayers[Player.RIGHT_SIDE].moveDecision(0, this.time, ball.point);
 
         if(move[Player.LEFT_SIDE][0] == Animal.DIR_LEFT)
-            listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.DIR_LEFT, this.time);
+            listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.DIR_LEFT, this.time, ball.point);
 
         else if(move[Player.LEFT_SIDE][0] == Animal.DIR_RIGHT)
-            listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.DIR_RIGHT, this.time);
+            listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.DIR_RIGHT, this.time, ball.point);
 
         else if(move[Player.LEFT_SIDE][0] == Animal.DIR_UP)
-            listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.DIR_UP, this.time);
+            listOfPlayers[Player.LEFT_SIDE].moveDecision(Animal.DIR_UP, this.time, ball.point);
 
-        else listOfPlayers[Player.LEFT_SIDE].moveDecision(0, this.time);
+        else listOfPlayers[Player.LEFT_SIDE].moveDecision(0, this.time, ball.point);
     }
-
 }

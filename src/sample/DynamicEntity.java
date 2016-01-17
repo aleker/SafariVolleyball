@@ -279,5 +279,6 @@ public class DynamicEntity extends StaticEntity {
         }
         return 0;
     }
+
 }
 
