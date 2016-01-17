@@ -9,6 +9,7 @@ public class AI_Ola extends Player {
     private double rightLimit;
     private Point old_ball_point;
     private int attack_side;
+    private boolean attack = false;
 
     private static final int GAME_WIDTH = 800;
     private static final int GAME_HEIGHT = 600;
@@ -18,18 +19,13 @@ public class AI_Ola extends Player {
     public AI_Ola(int side) {
         super(side);
         // set limits
-        this.old_ball_point = new Point(GameConstant.C_START_POS_X,GameConstant.C_START_POS_Y);
-        final StaticEntity leftWall = StaticEntity.list_of_staticEntity.get(0);
-        final StaticEntity rightWall = StaticEntity.list_of_staticEntity.get(1);
-        final StaticEntity net = StaticEntity.list_of_staticEntity.get(4);
-        final StaticEntity ground = StaticEntity.list_of_staticEntity.get(3);
         if (side == LEFT_SIDE) {
-            leftLimit = leftWall.point.pos_x + leftWall.width;
-            rightLimit = net.point.pos_x;
+            leftLimit = 0;
+            rightLimit = GAME_WIDTH/2;
             attack_side = ATTACK_RIGHT;
         } else {
-            leftLimit = net.point.pos_x + net.width;
-            rightLimit = rightWall.point.pos_x;
+            leftLimit = GAME_WIDTH/2;
+            rightLimit = GAME_WIDTH;
             attack_side = ATTACK_LEFT;
         }
     }
@@ -40,33 +36,50 @@ public class AI_Ola extends Player {
         if (attack_side == ATTACK_LEFT) {
             // if ball is on the LEFT side of the animal
             if (ball_point.pos_x < animal.point.pos_x && ball_point.pos_x > leftLimit) {
-                attack(deltaTime, ball_point);
-                animal.move(Animal.DIR_LEFT, deltaTime);
+                if (attack(deltaTime, ball_point)) return;
+                else {
+                    animal.move(Animal.DIR_LEFT, deltaTime);
+                    attack = true;
+                    return;
+                }
             }
             // if ball is on the RIGHT side of the animal
             else if (ball_point.pos_x > animal.point.pos_x) {
-                attack(deltaTime, ball_point);
-                animal.move(Animal.DIR_RIGHT, deltaTime);
+                if (attack(deltaTime, ball_point)) return;
+                else animal.move(Animal.DIR_RIGHT, deltaTime);
+                return;
             }
+            else animal.move(0, deltaTime);
         }
         else if (attack_side == ATTACK_RIGHT) {
             // if ball is on the LEFT side of the animal
             if (ball_point.pos_x < animal.point.pos_x) {
-                attack(deltaTime, ball_point);
-                animal.move(Animal.DIR_LEFT, deltaTime);
+                if (attack(deltaTime, ball_point)) return;
+                else animal.move(Animal.DIR_LEFT, deltaTime);
+                return;
             }
             // if ball is on the RIGHT side of the animal
             else if (ball_point.pos_x > animal.point.pos_x && ball_point.pos_x < rightLimit) {
-                attack(deltaTime, ball_point);
-                animal.move(Animal.DIR_RIGHT, deltaTime);
+                if (attack(deltaTime, ball_point)) return;
+                else {
+                    animal.move(Animal.DIR_RIGHT, deltaTime);
+                    attack = true;
+                    return;
+                }
             }
+            else animal.move(0, deltaTime);
         }
+        else animal.move(0,deltaTime);
+        return;
     }
 
-    private void attack(double deltaTime, Point ball_point) {
-        if ( ball_point.pos_y < GAME_HEIGHT/5) {
+    private boolean attack(double deltaTime, Point ball_point) {
+        if ( ball_point.pos_y < GAME_HEIGHT/5 && attack) {
             animal.move(Animal.DIR_UP, deltaTime);
+            attack = false;
+            return true;
         }
+        return false;
     }
 }
 
