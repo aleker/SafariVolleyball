@@ -16,7 +16,7 @@ public class AI_Joanna extends Player {
     public AI_Joanna(int side) {
         super(side);
         this.side = side;
-        middle = GameConstant.RIGHT_WALL_X/2;
+        middle = GameConstant.WINDOW_WIDTH/2;
     }
 
     @Override
@@ -32,38 +32,41 @@ public class AI_Joanna extends Player {
         if(ballOnMySide) {
             int delta = 10;
             int noJumpZone = 100;
+            boolean doMove = ballCoordinates.pos_y > 200;
 
             /** PRIORITY IS FALLING IF IN THE AIR **/
             if(animal.point.pos_y + animal.image.getHeight() < 600)
                 animal.move(0, time);
             /** MOVEMENT DECISION FOR WHEN LEFT PLAYER **/
             if(side == LEFT) {
-                if(ballCoordinates.pos_y < 400 && ballCoordinates.pos_y > 200 && ballDIR_Y == DOWN && ballDIR_X == RIGHT) {
+                if(ballCoordinates.pos_y < 400 && ballCoordinates.pos_y > 200 && ballDIR_Y == DOWN && ballDIR_X == LEFT) {
                     if(animal.center.pos_x < ballCoordinates.pos_x
                             && animal.center.pos_x + delta > ballCoordinates.pos_x
-                            && animal.center.pos_x < middle - noJumpZone)
+                            && animal.center.pos_x < middle - noJumpZone
+                            && doMove)
                         animal.move(animal.DIR_UP, time);
                 }
-                else if(animal.center.pos_x + delta < ballCoordinates.pos_x) {
+                else if(animal.center.pos_x + delta < ballCoordinates.pos_x && doMove) {
                     animal.move(animal.DIR_RIGHT, time);
                 }
-                else if(animal.center.pos_x > ballCoordinates.pos_x) {
+                else if(animal.center.pos_x > ballCoordinates.pos_x && doMove) {
                     animal.move(animal.DIR_LEFT, time);
                 }
                 else animal.move(0, time);
             }
             /** MOVEMENT DECISION FOR WHEN RIGHT PLAYER **/
             else {
-                if(ballCoordinates.pos_y < 400 && ballCoordinates.pos_y > 200 && ballDIR_Y == DOWN && ballDIR_X == LEFT) {
+                if(ballCoordinates.pos_y < 400 && ballCoordinates.pos_y > 200 && ballDIR_Y == DOWN && ballDIR_X == RIGHT) {
                     if(animal.center.pos_x - delta < ballCoordinates.pos_x
                             && animal.center.pos_x > ballCoordinates.pos_x
-                            && animal.center.pos_x > middle + noJumpZone)
+                            && animal.center.pos_x > middle + noJumpZone
+                            && doMove)
                         animal.move(animal.DIR_UP, time);
                 }
-                else if(animal.center.pos_x < ballCoordinates.pos_x) {
+                else if(animal.center.pos_x < ballCoordinates.pos_x && doMove) {
                     animal.move(animal.DIR_RIGHT, time);
                 }
-                else if(animal.center.pos_x - delta > ballCoordinates.pos_x) {
+                else if(animal.center.pos_x - delta > ballCoordinates.pos_x && doMove) {
                     animal.move(animal.DIR_LEFT, time);
                 }
                 else animal.move(0, time);
@@ -96,8 +99,9 @@ public class AI_Joanna extends Player {
     }
 
     private void prepare() {
+        int delta = 10;
         if(side == LEFT) {
-            if(animal.center.pos_x < middle/2)
+            if(animal.center.pos_x + delta < middle/2)
                 animal.move(animal.DIR_RIGHT, time);
             else if(animal.center.pos_x > middle/2)
                 animal.move(animal.DIR_LEFT, time);
@@ -106,7 +110,7 @@ public class AI_Joanna extends Player {
         else {
             if(animal.center.pos_x < middle + middle/2)
                 animal.move(animal.DIR_RIGHT, time);
-            else if(animal.center.pos_x > middle + middle/2)
+            else if(animal.center.pos_x - delta > middle + middle/2)
                 animal.move(animal.DIR_LEFT, time);
             else animal.move(0, time);
         }
