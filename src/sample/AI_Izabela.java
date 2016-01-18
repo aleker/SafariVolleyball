@@ -9,13 +9,11 @@ public class AI_Izabela extends Player{
     public AI_Izabela(int side) {
         super(side);
         this.side = side;
-        ball_point = new Point(0, 0);
     }
 
-    Point ball_point;
 
 
-    private boolean ballOnTheOtherSide() {
+    private boolean ballOnTheOtherSide(Point ball_point) {
         switch (side) {
             case LEFT_SIDE:
                 if (ball_point.pos_x > 400) {
@@ -61,8 +59,8 @@ public class AI_Izabela extends Player{
         }
     }
 
-    private boolean ballOverTheNet() {
-        if (ball_point.pos_y < 230) {
+    private boolean ballOverTheNet(Point ball_point) {
+        if (ball_point.pos_y < 200) {
             return true;
         } else return false;
     }
@@ -72,36 +70,66 @@ public class AI_Izabela extends Player{
         return;
     }
 
-    private void getBallPosition(double deltaTime) {
+    private void getBallPosition(double deltaTime,Point ball_point) {
         switch (side) {
             case LEFT_SIDE:
-                if (ball_point.pos_x < animal.point.pos_x && animal.point.pos_x > 100) {
+                if (ball_point.pos_x < animal.center.pos_x && animal.center.pos_x > 100) {
                     animal.move(Animal.DIR_LEFT, deltaTime); // go left
                     return;
-                } else if (ball_point.pos_x > animal.point.pos_x && animal.point.pos_x < 200) {
+                } else if (ball_point.pos_x > animal.center.pos_x && animal.center.pos_x < 200) {
                     animal.move(Animal.DIR_RIGHT, deltaTime); // go right
                     return;
                 }
+                else
+                    animal.move(0, deltaTime);
 
             case RIGHT_SIDE:
-                if (ball_point.pos_x < animal.point.pos_x && animal.point.pos_x > 500) {
+                if (ball_point.pos_x < animal.center.pos_x && animal.center.pos_x > 500) {
                     animal.move(Animal.DIR_LEFT, deltaTime); // go left
                     return;
-                } else if (ball_point.pos_x > animal.point.pos_x && animal.point.pos_x < 550) {
+                } else if (ball_point.pos_x > animal.center.pos_x && animal.center.pos_x < 600) {
                     animal.move(Animal.DIR_RIGHT, deltaTime); // go right
                     return;
                 }
+                else
+                    animal.move(0, deltaTime);
         }
+    }
+    private boolean offensiveStrategy(Point ball_point){
+        switch (side){
+            case LEFT_SIDE:
+                if(ball_point.pos_x>animal.center.pos_x && ballOverTheNet(ball_point)){
+                    return true;
+                }
+                else
+                    return false;
+            case RIGHT_SIDE:
+                if(ball_point.pos_x<animal.center.pos_x && ballOverTheNet(ball_point)){
+                    return true;
+                }
+                else
+                    return false;
+        }
+        return false;
     }
 
     @Override
     public void moveDecision(int direction, double deltaTime, Point ball_point) {
-        if (ballOnTheOtherSide()) {
+
+        if (ballOnTheOtherSide(ball_point)) {
             stayInCenter(deltaTime);
-        } else if (ballOverTheNet()) {
-            jump(deltaTime);
-        } else {
-            getBallPosition(deltaTime);
+            return;
+        }
+        else if (ballOverTheNet(ball_point)) {
+            if(offensiveStrategy(ball_point)){
+                jump(deltaTime);
+            }
+            return;
+
+        }
+         else {
+            getBallPosition(deltaTime,ball_point);
+            return;
         }
 
     }
