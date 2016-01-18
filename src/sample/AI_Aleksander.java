@@ -8,9 +8,13 @@ public class AI_Aleksander extends Player {
     private int counter;
     private int jmpCounter;
     private boolean jmpLock;
-    private static final double e = 1.0;
+    private static final double e = 10.0;
     private static final double f = 51.0;
-    private static final double g = 20.0;
+    private static final double g = 200.0;
+    private static final double h = 150.0;
+    private static final double i = 100;
+    private double vx, vy;
+    private double bx, by;
 
     public AI_Aleksander(int side) {
         super(side);
@@ -18,12 +22,20 @@ public class AI_Aleksander extends Player {
         counter = 0;
         jmpCounter = 0;
         jmpLock = false;
+        vx = 0;
+        vy = 0;
+        bx = 0;
+        by = 0;
     }
 
     @Override
     public void moveDecision(int dir, double deltaTime, Point ball_point) {
+        vx = (ball_point.pos_x - bx) / deltaTime;
+        vy = (ball_point.pos_y - by) / deltaTime;
+        bx = ball_point.pos_x;
+        by = ball_point.pos_y;
         counter++;
-        final double a = GameConstant.ANIMAL_RADIUS_PER_PIXEL * animal.width;
+        final double a = GameConstant.ANIMAL_RADIUS_PER_PIXEL * animal.width * 2;
         int direction = 0;
         final double dx = ball_point.pos_x - animal.center.pos_x;
         if (dx * b > a / 2) {
@@ -33,13 +45,14 @@ public class AI_Aleksander extends Player {
             if (b < 0)  direction = Animal.DIR_RIGHT;
             else        direction = Animal.DIR_LEFT;
         }
-        if (dx * b > a/2) {
-            long speed = Math.round(Math.abs(dx) / e);
+        if (dx * b > a / 2) {
+            long speed = Math.round(dx * dx / e);
             if (speed > 10) speed = 10;
             if (counter > speed) direction = 0;
         }
         final double dy = ball_point.pos_y - animal.center.pos_y;
-        if (Math.sqrt(dx * dx + dy * dy) <= a + f + g && (dx * b) > a / 2 && (dx * b) < a) {
+        final double dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist <= a + f + g && dist > a + f + h && (dx * b) > a / 2 && (dx * b) < a && Math.abs(vx) < i && vy > 0) {
             if (!jmpLock) {
                 jmpCounter++;
                 if (jmpCounter == 1)
