@@ -1,5 +1,9 @@
 package sample;
 
+import com.sun.org.apache.xerces.internal.dom.AttrNSImpl;
+
+import javax.lang.model.element.AnnotationMirror;
+
 /**
  * Created by AiS on 2016-01-17.
  */
@@ -10,9 +14,10 @@ public class AI_Aleksander extends Player {
     private boolean jmpLock;
     private static final double e = 10.0;
     private static final double f = 51.0;
-    private static final double g = 200.0;
-    private static final double h = 150.0;
+    private static final double g = 300.0;
+    private static final double h = 250.0;
     private static final double i = 100;
+    private static final int j = 9;
     private double vx, vy;
     private double bx, by;
 
@@ -41,14 +46,10 @@ public class AI_Aleksander extends Player {
         if (dx * b > a / 2) {
             if (b < 0)  direction = Animal.DIR_LEFT;
             else        direction = Animal.DIR_RIGHT;
+            if (counter > j) direction = 0;
         } else {
             if (b < 0)  direction = Animal.DIR_RIGHT;
             else        direction = Animal.DIR_LEFT;
-        }
-        if (dx * b > a / 2) {
-            long speed = Math.round(dx * dx / e);
-            if (speed > 10) speed = 10;
-            if (counter > speed) direction = 0;
         }
         final double dy = ball_point.pos_y - animal.center.pos_y;
         final double dist = Math.sqrt(dx * dx + dy * dy);
