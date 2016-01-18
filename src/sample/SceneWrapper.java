@@ -31,8 +31,6 @@ public abstract class SceneWrapper extends Scene {
         this.height = windowHeight;
         this.root = root;
         this.pane = root;
-        initialize();
-        handleEvents();
     }
 
     public SceneWrapper(Group root, Game game, int windowWidth, int windowHeight) {

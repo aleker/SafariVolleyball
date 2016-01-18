@@ -18,12 +18,5 @@ public class PlayerList {
             return null;
         }
     }
-    //
 }
 
-class AI extends Player {
-    public AI(int side) {
-        super(side);
-        System.out.println("AI has been created");
-    }
-}
