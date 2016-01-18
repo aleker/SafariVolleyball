@@ -51,7 +51,6 @@ public class AI_Mateusz extends Player{
         }
         dx = ball_point.pos_x - x + px/2;
         dy = abs(ball_point.pos_y - y);
-        System.out.println(dy);
         if(abs(dx) < 20.0 && dy < 200.0) {
             animal.move(Animal.DIR_UP, deltaTime);
             return;
